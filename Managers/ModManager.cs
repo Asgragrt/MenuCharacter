@@ -21,8 +21,8 @@ internal static class ModManager
 
     private static IEnumerator CreateGirlsRoutine()
     {
-        yield return null;
         CreateGirls();
+        yield return null;
     }
 
     internal static void CreateGirlsMelon()
