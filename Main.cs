@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using MelonLoader;
+﻿using MelonLoader;
 using MenuCharacter.Managers;
 using MenuCharacter.Properties;
 
@@ -16,17 +15,15 @@ public sealed class Main : MelonMod
     public override void OnLateInitializeMelon()
     {
         WatcherManager.Init();
+
         WatcherManager.WatcherEvent += (_, _) =>
         {
             SettingsManager.Load();
-            MelonCoroutines.Start(CreateGirlsRoutine());
+
+            // Leaving the girls update to a melon thread to avoid access violations
+            ModManager.CreateGirlsMelon();
+
             LoggerInstance.Msg($"{MelonBuildInfo.ModName} reloaded correctly!");
         };
-    }
-
-    private static IEnumerator CreateGirlsRoutine()
-    {
-        yield return null;
-        ModManager.CreateGirls();
     }
 }

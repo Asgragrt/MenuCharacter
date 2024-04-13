@@ -1,4 +1,6 @@
-﻿using Il2CppAssets.Scripts.UI.Panels;
+﻿using System.Collections;
+using Il2CppAssets.Scripts.UI.Panels;
+using MelonLoader;
 using MenuCharacter.Models;
 
 namespace MenuCharacter.Managers;
@@ -15,5 +17,17 @@ internal static class ModManager
     {
         StageGirl.CreateGirl();
         PreparationGirl.CreateGirl();
+    }
+
+    private static IEnumerator CreateGirlsRoutine()
+    {
+        yield return null;
+        CreateGirls();
+    }
+
+    internal static void CreateGirlsMelon()
+    {
+        // Leaving the girls update to a melon thread to avoid access violations
+        MelonCoroutines.Start(CreateGirlsRoutine());
     }
 }
