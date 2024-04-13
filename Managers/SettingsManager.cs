@@ -18,7 +18,9 @@ internal static class SettingsManager
 
     private static readonly MelonPreferences_Entry<string> ShowEntry = Category.CreateEntry("ShowType", "Victory");
 
-    internal static int ShowIndex;
+    private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
+
+    internal static int ShowIndex { get; private set; }
 
     internal static string Show
     {
@@ -26,25 +28,50 @@ internal static class SettingsManager
         private set => ShowEntry.Value = value;
     }
 
+    internal static bool Debug => DebugEntry.Value;
+
     private static void Init()
     {
         Category.SetFilePath(SettingsPath, false, false);
 
         var absolutePath = Path.Join(UserDataDirectory, SettingsFileName);
-        if (!File.Exists(absolutePath)) MelonPreferences.Save();
+
+        try
+        {
+            Logger.Debug("Checking for config file existence.");
+
+            if (File.Exists(absolutePath)) return;
+
+            Logger.Debug("Creating config file.");
+            MelonPreferences.Save();
+            Logger.Debug("Created config file.");
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e);
+        }
     }
 
     internal static void Load()
     {
-        Category.LoadFromFile(false);
+        try
+        {
+            Logger.Debug("Loading settings from file.");
+            Category.LoadFromFile(false);
+            Logger.Debug("Loaded settings from file.");
 
-        // Clean input
-        var currentShow = Show;
-        ShowIndex = Shows.ShowToIndex(Show);
-        Show = Shows.IndexToShow(ShowIndex);
+            // Clean input
+            var currentShow = Show;
+            ShowIndex = Shows.ShowToIndex(Show);
+            Show = Shows.IndexToShow(ShowIndex);
 
-        if (string.Equals(Show, currentShow)) return;
-        Melon<Main>.Logger.Warning($"{currentShow} is not a valid value for Show, using default value: Victory");
+            if (string.Equals(Show, currentShow)) return;
+            Logger.Warning($"{currentShow} is not a valid value for Show, using default value: Victory");
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e);
+        }
     }
 
     internal static void InitAndLoad()

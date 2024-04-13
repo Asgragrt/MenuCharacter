@@ -1,4 +1,6 @@
-﻿namespace MenuCharacter.Models;
+﻿using MenuCharacter.Utils;
+
+namespace MenuCharacter.Models;
 
 internal class StageGirl : GirlBaseClass
 {
@@ -8,7 +10,13 @@ internal class StageGirl : GirlBaseClass
     {
         if (!Girl) return;
         var targetParent = ParentTransform.Find("StageUi")?.Find("Info").Find("Bottom");
-        if (!targetParent) return; // Maybe add log error here
+
+        if (!targetParent)
+        {
+            Logger.Debug("Couldn't find Bottom transform.");
+            return;
+        }
+
         Girl.transform.SetParent(targetParent);
         Girl.transform.SetAsFirstSibling();
     }

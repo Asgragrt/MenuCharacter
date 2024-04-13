@@ -1,4 +1,5 @@
 ﻿using MelonLoader.Utils;
+using MenuCharacter.Utils;
 
 namespace MenuCharacter.Managers;
 
@@ -10,6 +11,8 @@ internal static class WatcherManager
 
     internal static void Init()
     {
+        Logger.Debug("Initializing watcher settings.");
+
         // Initialize file watcher
         Watcher.NotifyFilter = NotifyFilters.LastWrite
                                | NotifyFilters.Size;

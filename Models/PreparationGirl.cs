@@ -2,6 +2,7 @@
 using MelonLoader;
 using MenuCharacter.Managers;
 using UnityEngine;
+using Logger = MenuCharacter.Utils.Logger;
 
 namespace MenuCharacter.Models;
 
@@ -23,9 +24,22 @@ internal class PreparationGirl : GirlBaseClass
         if (!Girl) yield break;
 
         Girl.SetActive(false);
-        var stageUi = ModManager.PnlStage.transform.Find("StageUi").gameObject;
 
-        while (stageUi.active)
+        if (!ModManager.PnlStage)
+        {
+            Logger.Debug("There's no PnlStage");
+            yield break;
+        }
+
+        var stageUi = ModManager.PnlStage.transform.Find("StageUi")?.gameObject;
+
+        if (!stageUi)
+        {
+            Logger.Debug("Couldn't find StageUi game object.");
+            yield break;
+        }
+
+        while (stageUi != null && stageUi.active)
         {
             if (!Girl) yield break;
             yield return null;
