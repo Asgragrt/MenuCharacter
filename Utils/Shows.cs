@@ -1,4 +1,4 @@
-﻿namespace MenuCharacter.Models;
+﻿namespace MenuCharacter.Utils;
 
 internal static class Shows
 {

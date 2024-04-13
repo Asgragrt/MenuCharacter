@@ -1,7 +1,7 @@
 ﻿using MelonLoader;
 using MelonLoader.Utils;
-using MenuCharacter.Models;
 using MenuCharacter.Properties;
+using MenuCharacter.Utils;
 
 namespace MenuCharacter.Managers;
 
@@ -37,7 +37,7 @@ internal static class SettingsManager
     internal static void Load()
     {
         Category.LoadFromFile(false);
-        
+
         // Clean input
         var currentShow = Show;
         ShowIndex = Shows.ShowToIndex(Show);
