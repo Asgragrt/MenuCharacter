@@ -37,7 +37,6 @@ internal static class ModManager
         SetGirlStageParent();
 
         MenuGirl.name = "MenuGirlObject";
-        MenuGirl.transform.position = new Vector3(6.7f, -5f, 1f);
         MenuGirl.transform.localScale = new Vector3(-0.5f, 0.5f, 1f);
     }
 
@@ -57,8 +56,11 @@ internal static class ModManager
 
     private static void SetGirlStageParent()
     {
-        //MenuGirl.transform.SetParent(PnlStage.transform.Find("StageUi").Find("Info"));
-        MenuGirl.transform.SetParent(PnlStage.transform);
+        if (!MenuGirl) return;
+        MenuGirl.transform.SetParent(PnlStage.transform.Find("StageUi").Find("Info").Find("Bottom"));
+        MenuGirl.transform.position = new Vector3(6.7f, -5f, 1f);
+        MenuGirl.transform.SetAsFirstSibling();
+        //MenuGirl.transform.SetParent(PnlStage.transform);
     }
 
     private static IEnumerator SetGirlStageParentCoroutine()
