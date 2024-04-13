@@ -10,4 +10,10 @@ internal static class ModManager
     internal static PreparationGirl PreparationGirl { get; } = new();
 
     internal static PnlStage PnlStage { get; set; }
+
+    internal static void CreateGirls()
+    {
+        StageGirl.CreateGirl();
+        PreparationGirl.CreateGirl();
+    }
 }

@@ -9,7 +9,6 @@ internal static class CharacterChangePatch
 {
     internal static void Postfix()
     {
-        ModManager.StageGirl.CreateGirl();
-        ModManager.PreparationGirl.CreateGirl();
+        ModManager.CreateGirls();
     }
 }
