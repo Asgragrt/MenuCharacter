@@ -16,7 +16,7 @@ internal static class ModManager
     internal static GameObject MenuGirl { get; set; }
 
     internal static PnlStage PnlStage { get; set; }
-    
+
     internal static PnlPreparation PnlPreparation { get; set; }
 
     internal static void CreateGirl()
@@ -43,7 +43,6 @@ internal static class ModManager
 
     internal static void UpdateGirlParent(bool isActive)
     {
-        MelonLoader.Melon<Main>.Logger.Msg("Updating...");
         if (!PnlPreparation || !MenuGirl) return;
 
         if (isActive)
