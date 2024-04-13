@@ -1,24 +1,16 @@
 ﻿using HarmonyLib;
 using Il2Cpp;
-using Il2CppAssets.Scripts.UI.Specials;
 using MenuCharacter.Managers;
 
 namespace MenuCharacter.Patches;
 
-[HarmonyPatch]
+[HarmonyPatch(typeof(PnlPreparation), nameof(PnlPreparation.Awake))]
 internal static class PreparationPatch
 {
-    [HarmonyPatch(typeof(PnlPreparation), nameof(PnlPreparation.Awake))]
-    [HarmonyPostfix]
-    internal static void AwakePostfix(PnlPreparation __instance)
+    internal static void Postfix(PnlPreparation __instance)
     {
-        ModManager.PnlPreparation = __instance;
-    }
-    
-    [HarmonyPatch(typeof(AutoPushPopPanel), nameof(AutoPushPopPanel.OnPnlPreparationActiveChanged))]
-    [HarmonyPrefix]
-    internal static void OnEnablePostfix(bool active)
-    {
-        ModManager.UpdateGirlParent(active);
+        //ModManager.PnlPreparation = __instance;
+        ModManager.PreparationGirl.SetParent(__instance.transform);
+        ModManager.PreparationGirl.CreateGirl();
     }
 }
