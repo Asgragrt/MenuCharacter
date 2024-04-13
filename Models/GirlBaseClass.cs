@@ -3,7 +3,9 @@ using Il2CppAssets.Scripts.Database;
 using Il2CppAssets.Scripts.PeroTools.Commons;
 using Il2CppAssets.Scripts.PeroTools.Managers;
 using Il2CppPeroTools2.Resources;
+using MelonLoader;
 using MenuCharacter.Managers;
+using MenuCharacter.Utils;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -13,6 +15,8 @@ internal abstract class GirlBaseClass(string name)
 {
     private static readonly DBConfigCharacter _dbConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
+
+    private bool _parentSet;
 
     protected Transform ParentTransform;
 
@@ -32,17 +36,23 @@ internal abstract class GirlBaseClass(string name)
 
     internal void CreateGirl()
     {
+        if (!_parentSet) return;
+        Melon<Main>.Logger.Msg("Destroying!");
         Object.Destroy(Girl);
+
+        Melon<Main>.Logger.Msg("Instantiating!");
 
         Girl = ResourcesManager.instance
             .LoadFromName<GameObject>(GetAssetName())
             .FastInstantiate();
 
+        Melon<Main>.Logger.Msg("Parenting!");
         SetGirlParent();
 
         //if (!Girl.TryGetComponent(out RectTransform _)) Girl.AddComponent<RectTransform>();
         if (Girl.TryGetComponent(out MeshRenderer mr)) mr.sortingOrder = 100;
 
+        Melon<Main>.Logger.Msg("Scaling!");
         Girl.name = name;
         SetGirlScale();
         Girl.transform.position = new Vector3(6.7f, -5f, 100f);
@@ -66,5 +76,6 @@ internal abstract class GirlBaseClass(string name)
     internal void SetParent(Transform parentTransform)
     {
         ParentTransform = parentTransform;
+        _parentSet = true;
     }
 }
