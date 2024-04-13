@@ -14,7 +14,7 @@ internal static class PreparationPatch
         ModManager.PreparationGirl.SetParent(__instance.transform);
         ModManager.PreparationGirl.CreateGirl();
     }
-    
+
     [HarmonyPatch(nameof(PnlPreparation.OnEnable))]
     [HarmonyPostfix]
     internal static void OnEnablePostfix()

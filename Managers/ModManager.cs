@@ -8,6 +8,6 @@ internal static class ModManager
     internal static StageGirl StageGirl { get; } = new();
 
     internal static PreparationGirl PreparationGirl { get; } = new();
-    
+
     internal static PnlStage PnlStage { get; set; }
 }

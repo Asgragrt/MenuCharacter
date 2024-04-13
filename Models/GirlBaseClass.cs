@@ -55,7 +55,7 @@ internal abstract class GirlBaseClass(string name)
         {
             Shows.Main => new Vector3(-50f, 50f, 100f),
             Shows.Victory => new Vector3(-0.5f, 0.5f, 100f),
-            _ => new Vector3(-0.75f, 0.75f, 100f),
+            _ => new Vector3(-0.75f, 0.75f, 100f)
         };
     }
 

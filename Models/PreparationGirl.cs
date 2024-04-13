@@ -32,7 +32,7 @@ internal class PreparationGirl : GirlBaseClass
         }
 
         yield return new WaitForSeconds(0.2f);
-        
+
         if (!Girl) yield break;
         Girl.SetActive(true);
     }
