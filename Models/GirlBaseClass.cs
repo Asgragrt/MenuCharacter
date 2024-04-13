@@ -3,6 +3,7 @@ using Il2CppAssets.Scripts.Database;
 using Il2CppAssets.Scripts.PeroTools.Commons;
 using Il2CppAssets.Scripts.PeroTools.Managers;
 using Il2CppPeroTools2.Resources;
+using MenuCharacter.Managers;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -13,8 +14,6 @@ internal abstract class GirlBaseClass(string name)
     private static readonly DBConfigCharacter _dbConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
 
-    private static readonly int _show = 0;
-
     protected Transform ParentTransform;
 
     protected GameObject Girl { get; private set; }
@@ -23,7 +22,7 @@ internal abstract class GirlBaseClass(string name)
     {
         var charInfo = _dbConfigCharacter.GetCharacterInfoByIndex(DataHelper.selectedRoleIndex);
 
-        return _show switch
+        return SettingsManager.ShowIndex switch
         {
             Shows.Main => charInfo.mainShow,
             Shows.Victory => charInfo.victoryShow,
@@ -51,7 +50,7 @@ internal abstract class GirlBaseClass(string name)
 
     private void SetGirlScale()
     {
-        Girl.transform.localScale = _show switch
+        Girl.transform.localScale = SettingsManager.ShowIndex switch
         {
             Shows.Main => new Vector3(-50f, 50f, 100f),
             Shows.Victory => new Vector3(-0.5f, 0.5f, 100f),
