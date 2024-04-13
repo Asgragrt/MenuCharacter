@@ -26,8 +26,12 @@ internal static class ModManager
             .GetCharacterInfoByIndex(DataHelper.selectedRoleIndex)
             .victoryShow;
 
-        MenuGirl = ResourcesManager.instance.LoadFromName<GameObject>(assetName).FastInstantiate(PnlStage.transform);
-        MenuGirl.transform.position = new Vector3(-6.7f, -5f, 1f);
-        MenuGirl.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        MenuGirl = ResourcesManager.instance
+            .LoadFromName<GameObject>(assetName)
+            .FastInstantiate(PnlStage.transform);
+
+        MenuGirl.name = "MenuGirlObject";
+        MenuGirl.transform.position = new Vector3(6.7f, -5f, 1f);
+        MenuGirl.transform.localScale = new Vector3(-0.5f, 0.5f, 1f);
     }
 }
