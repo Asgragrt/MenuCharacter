@@ -4,7 +4,7 @@ namespace MenuCharacter.Managers;
 
 internal static class ModManager
 {
-    internal static StageGirl StageGirl { get; set; } = new();
+    internal static StageGirl StageGirl { get; } = new();
 
-    internal static PreparationGirl PreparationGirl { get; set; } = new();
+    internal static PreparationGirl PreparationGirl { get; } = new();
 }
