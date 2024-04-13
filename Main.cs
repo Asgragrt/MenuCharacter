@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using System.Collections;
+using MelonLoader;
 using MenuCharacter.Managers;
 using MenuCharacter.Properties;
 
@@ -9,7 +10,7 @@ public sealed class Main : MelonMod
     public override void OnInitializeMelon()
     {
         SettingsManager.InitAndLoad();
-        LoggerInstance.Msg($"{MelonBuildInfo.ModName} has loaded correctly!");
+        LoggerInstance.Msg($"{MelonBuildInfo.ModName} loaded correctly!");
     }
 
     public override void OnLateInitializeMelon()
@@ -18,7 +19,14 @@ public sealed class Main : MelonMod
         WatcherManager.WatcherEvent += (_, _) =>
         {
             SettingsManager.Load();
+            MelonCoroutines.Start(CreateGirlsRoutine());
             LoggerInstance.Msg($"{MelonBuildInfo.ModName} reloaded correctly!");
         };
+    }
+
+    private static IEnumerator CreateGirlsRoutine()
+    {
+        yield return null;
+        ModManager.CreateGirls();
     }
 }
