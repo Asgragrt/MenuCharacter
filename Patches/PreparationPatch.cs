@@ -9,7 +9,6 @@ internal static class PreparationPatch
 {
     internal static void Postfix(PnlPreparation __instance)
     {
-        //ModManager.PnlPreparation = __instance;
         ModManager.PreparationGirl.SetParent(__instance.transform);
         ModManager.PreparationGirl.CreateGirl();
     }
