@@ -10,16 +10,26 @@ namespace MenuCharacter.Models;
 
 internal abstract class GirlBaseClass(string name)
 {
-    private static readonly Vector3 ScaleVector = new(-0.5f, 0.5f, 1f);
+    private static readonly DBConfigCharacter _dbConfigCharacter = Singleton<ConfigManager>.instance
+        .GetConfigObject<DBConfigCharacter>();
+
+    private static readonly int _show = 0;
 
     protected Transform ParentTransform;
 
     protected GameObject Girl { get; private set; }
 
-    private static string GetAssetName() => Singleton<ConfigManager>.instance
-        .GetConfigObject<DBConfigCharacter>()
-        .GetCharacterInfoByIndex(DataHelper.selectedRoleIndex)
-        .victoryShow;
+    private static string GetAssetName()
+    {
+        var charInfo = _dbConfigCharacter.GetCharacterInfoByIndex(DataHelper.selectedRoleIndex);
+
+        return _show switch
+        {
+            Shows.Main => charInfo.mainShow,
+            Shows.Victory => charInfo.victoryShow,
+            _ => charInfo.failShow
+        };
+    }
 
     internal void CreateGirl()
     {
@@ -31,9 +41,22 @@ internal abstract class GirlBaseClass(string name)
 
         SetGirlParent();
 
+        //if (!Girl.TryGetComponent(out RectTransform _)) Girl.AddComponent<RectTransform>();
+        if (Girl.TryGetComponent(out MeshRenderer mr)) mr.sortingOrder = 100;
+
         Girl.name = name;
-        Girl.transform.localScale = ScaleVector;
-        Girl.transform.position = new Vector3(6.7f, -5f, 1f);
+        SetGirlScale();
+        Girl.transform.position = new Vector3(6.7f, -5f, 100f);
+    }
+
+    private void SetGirlScale()
+    {
+        Girl.transform.localScale = _show switch
+        {
+            Shows.Main => new Vector3(-50f, 50f, 100f),
+            Shows.Victory => new Vector3(-0.5f, 0.5f, 100f),
+            _ => new Vector3(-0.75f, 0.75f, 100f),
+        };
     }
 
     protected virtual void SetGirlParent()
