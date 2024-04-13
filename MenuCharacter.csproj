@@ -44,6 +44,9 @@
         <Reference Include="Il2CppPeroTools2.Resourcesn">
             <HintPath>$(MD_DIRECTORY)\MelonLoader\Il2CppAssemblies\Il2CppPeroTools2.Resources.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(MD_DIRECTORY)\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
 </Project>
