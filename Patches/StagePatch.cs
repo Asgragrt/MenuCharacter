@@ -10,6 +10,7 @@ internal static class StagePatch
     [HarmonyPostfix]
     internal static void Postfix(PnlStage __instance)
     {
-        ModManager.CreateGirl(__instance);
+        ModManager.PnlStage = __instance;
+        ModManager.CreateGirl();
     }
 }
