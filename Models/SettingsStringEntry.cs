@@ -24,7 +24,10 @@ internal abstract class SettingsStringEntry(MelonPreferences_Category category, 
         var currentVal = Value.Trim();
 
         Index = StringToIndex(currentVal);
+        Logger.Debug($"\"{name}\" string to index: {Index} ");
+        
         Value = IndexToString(Index);
+        Logger.Debug($"\"{name}\" index to string: {Value} ");
 
         if (Value.InvEquals(currentVal)) return;
 
