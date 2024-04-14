@@ -30,26 +30,10 @@ internal static class SettingsManager
 
     internal static bool Debug => DebugEntry.Value;
 
-    private static void Init()
+    internal static void InitAndLoad()
     {
-        Category.SetFilePath(SettingsPath, false, false);
-
-        var absolutePath = Path.Join(UserDataDirectory, SettingsFileName);
-
-        try
-        {
-            Logger.Debug("Checking for config file existence.");
-
-            if (File.Exists(absolutePath)) return;
-
-            Logger.Debug("Creating config file.");
-            MelonPreferences.Save();
-            Logger.Debug("Created config file.");
-        }
-        catch (Exception e)
-        {
-            Logger.Error(e);
-        }
+        Init();
+        Load();
     }
 
     internal static void Load()
@@ -74,9 +58,25 @@ internal static class SettingsManager
         }
     }
 
-    internal static void InitAndLoad()
+    private static void Init()
     {
-        Init();
-        Load();
+        Category.SetFilePath(SettingsPath, false, false);
+
+        var absolutePath = Path.Join(UserDataDirectory, SettingsFileName);
+
+        try
+        {
+            Logger.Debug("Checking for config file existence.");
+
+            if (File.Exists(absolutePath)) return;
+
+            Logger.Debug("Creating config file.");
+            MelonPreferences.Save();
+            Logger.Debug("Created config file.");
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e);
+        }
     }
 }

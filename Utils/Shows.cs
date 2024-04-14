@@ -16,28 +16,6 @@ internal static class Shows
 
     private static readonly Vector3 FailScale = new(-0.75f, 0.75f, 100f);
 
-    internal static int ShowToIndex(string show)
-    {
-        return show switch
-        {
-            "Main" => Main,
-            "Victory" => Victory,
-            "Fail" => Fail,
-            _ => Victory
-        };
-    }
-
-    internal static string IndexToShow(int index)
-    {
-        return index switch
-        {
-            Main => "Main",
-            Victory => "Victory",
-            Fail => "Fail",
-            _ => "Victory"
-        };
-    }
-
     internal static string IndexToProperty(int index)
     {
         return index switch
@@ -57,6 +35,28 @@ internal static class Shows
             Victory => VictoryScale,
             Fail => FailScale,
             _ => VictoryScale
+        };
+    }
+
+    internal static string IndexToShow(int index)
+    {
+        return index switch
+        {
+            Main => "Main",
+            Victory => "Victory",
+            Fail => "Fail",
+            _ => "Victory"
+        };
+    }
+
+    internal static int ShowToIndex(string show)
+    {
+        return show switch
+        {
+            "Main" => Main,
+            "Victory" => Victory,
+            "Fail" => Fail,
+            _ => Victory
         };
     }
 }

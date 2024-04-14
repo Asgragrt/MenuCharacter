@@ -16,33 +16,25 @@ internal abstract class GirlBaseClass(string name)
     private static readonly DBConfigCharacter DBConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
 
+    private int _girlIndex;
+
     private bool _parentSet;
 
-    private int _girlIndex;
 
     protected Transform ParentTransform;
 
     protected GameObject Girl { get; private set; }
 
-    private string GetAssetName()
+    protected virtual void SetGirlParent()
     {
-        Logger.Debug($"{name}: Getting character info.");
-        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(_girlIndex);
-
-        var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.ShowIndex))
-            ?.GetValue(charInfo, null)
-            ?.ToString();
-
-        Logger.Debug($"{name} asset name: {assetName}");
-
-        return assetName;
+        Girl.transform.SetParent(ParentTransform);
     }
 
     internal void CreateGirl()
     {
         Logger.Debug($"{name}: Getting girl index!");
         _girlIndex = DataHelper.selectedRoleIndex;
-        
+
         if (!_parentSet)
         {
             Logger.Debug($"{name} doesn't have a parent.");
@@ -77,19 +69,28 @@ internal abstract class GirlBaseClass(string name)
         Girl.transform.position = new Vector3(6.7f, -5f, 100f);
     }
 
-    private void SetGirlScale()
-    {
-        Girl.transform.localScale = Shows.IndexToScale(SettingsManager.ShowIndex);
-    }
-
-    protected virtual void SetGirlParent()
-    {
-        Girl.transform.SetParent(ParentTransform);
-    }
-
     internal void SetParent(Transform parentTransform)
     {
         ParentTransform = parentTransform;
         _parentSet = true;
+    }
+
+    private string GetAssetName()
+    {
+        Logger.Debug($"{name}: Getting character info.");
+        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(_girlIndex);
+
+        var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.ShowIndex))
+            ?.GetValue(charInfo, null)
+            ?.ToString();
+
+        Logger.Debug($"{name} asset name: {assetName}");
+
+        return assetName;
+    }
+
+    private void SetGirlScale()
+    {
+        Girl.transform.localScale = Shows.IndexToScale(SettingsManager.ShowIndex);
     }
 }

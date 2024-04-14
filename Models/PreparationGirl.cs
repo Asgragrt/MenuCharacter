@@ -19,6 +19,21 @@ internal class PreparationGirl : GirlBaseClass
         ParentTransform.Find("Start")?.SetAsLastSibling();
     }
 
+
+    internal void WaitToEnable()
+    {
+        try
+        {
+            MelonCoroutines.Stop(_routine);
+        }
+        catch
+        {
+            // ignored if _routine is not a valid coroutine
+        }
+
+        _routine = MelonCoroutines.Start(WaitToEnableCoroutine());
+    }
+
     private IEnumerator WaitToEnableCoroutine()
     {
         if (!Girl) yield break;
@@ -49,20 +64,5 @@ internal class PreparationGirl : GirlBaseClass
 
         if (!Girl) yield break;
         Girl.SetActive(true);
-    }
-
-
-    internal void WaitToEnable()
-    {
-        try
-        {
-            MelonCoroutines.Stop(_routine);
-        }
-        catch
-        {
-            // ignored if _routine is not a valid coroutine
-        }
-
-        _routine = MelonCoroutines.Start(WaitToEnableCoroutine());
     }
 }

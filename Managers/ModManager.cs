@@ -17,22 +17,22 @@ internal static class ModManager
     internal static void CreateGirls()
     {
         Logger.Debug("Updating girls...");
-        
+
         StageGirl.CreateGirl();
         PreparationGirl.CreateGirl();
 
         Logger.Debug("Updated girls!");
     }
 
-    private static IEnumerator CreateGirlsRoutine()
-    {
-        yield return null;
-        CreateGirls();
-    }
-
     internal static void CreateGirlsMelon()
     {
         // Leaving the girls update to a melon thread to avoid access violations
         MelonCoroutines.Start(CreateGirlsRoutine());
+    }
+
+    private static IEnumerator CreateGirlsRoutine()
+    {
+        yield return null;
+        CreateGirls();
     }
 }
