@@ -41,9 +41,7 @@ internal static class SettingsManager
             Category.LoadFromFile(false);
             Logger.Debug("Loaded settings from file.");
 
-            foreach(var stringSetting in _stringEntries){
-                stringSetting.Verify();
-            }
+            foreach (var stringSetting in _stringEntries) stringSetting.Verify();
         }
         catch (Exception e)
         {

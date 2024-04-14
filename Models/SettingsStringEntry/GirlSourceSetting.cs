@@ -5,9 +5,10 @@ namespace MenuCharacter.Models;
 
 internal class GirlSourceSetting : SettingsStringEntry
 {
-    internal GirlSourceSetting(MelonPreferences_Category category) : base(category, "GirlSource", GirlSources.Default){}
-    
-    protected override int StringToIndex(string s) => GirlSources.StringToIndex(s);
+    internal GirlSourceSetting(MelonPreferences_Category category) :
+        base(category, "GirlSource", GirlSources.Default) { }
 
     protected override string IndexToString(int i) => GirlSources.IndexToString(i);
+
+    protected override int StringToIndex(string s) => GirlSources.StringToIndex(s);
 }
