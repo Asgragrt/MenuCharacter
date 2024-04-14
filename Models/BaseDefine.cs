@@ -1,8 +1,8 @@
 ﻿namespace MenuCharacter.Models;
 
-internal abstract class BaseDefine<T> : IDefine where T : struct, Enum, IConvertible
+internal abstract class BaseDefine<T> (T defVal): IDefine where T : struct, Enum, IConvertible
 {
-    string IDefine.Default => default(T).ToString();
+    string IDefine.Default => defVal.ToString();
 
     string IDefine.IndexToString(int i) => Enum.GetName(typeof(T), i) ?? ((IDefine)this).Default;
 

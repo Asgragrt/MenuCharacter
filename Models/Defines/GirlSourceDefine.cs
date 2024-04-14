@@ -4,7 +4,7 @@ using MenuCharacter.Managers;
 
 namespace MenuCharacter.Models.Defines;
 
-internal class GirlSourceDefine : BaseDefine<Source>
+internal class GirlSourceDefine() : BaseDefine<Source>(Source.Fixed)
 {
     internal static int GetGirlIndex()
     {

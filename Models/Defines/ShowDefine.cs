@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MenuCharacter.Models.Defines;
 
-internal class ShowDefine : BaseDefine<Show>
+internal class ShowDefine() : BaseDefine<Show>(Show.Victory)
 {
     internal static string Property => IndexToProperty(SettingsManager.Show.Index);
 
