@@ -32,7 +32,7 @@ internal abstract class BaseGirlClass(string name)
     internal void CreateGirl()
     {
         Logger.Debug($"{name}: Getting girl index!");
-        _girlIndex = GetGirlIndex();
+        _girlIndex = GirlSourceDefine.GetGirlIndex();
 
         if (!_parentSet)
         {
@@ -87,8 +87,6 @@ internal abstract class BaseGirlClass(string name)
 
         return assetName;
     }
-
-    private int GetGirlIndex() => DataHelper.selectedRoleIndex;
 
     private void SetGirlScale()
     {
