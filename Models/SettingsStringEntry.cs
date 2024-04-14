@@ -21,12 +21,12 @@ internal abstract class SettingsStringEntry(MelonPreferences_Category category, 
 
     internal void Verify()
     {
-        var currentVal = Value;
+        var currentVal = Value.Trim();
 
-        Index = StringToIndex(Value);
+        Index = StringToIndex(currentVal);
         Value = IndexToString(Index);
 
-        if (string.Equals(Value, currentVal)) return;
+        if (Value.InvEquals(currentVal)) return;
 
         Logger.Warning($"\"{currentVal}\" is not a valid value for \"{name}\", using default value: \"{defaultVal}\"");
     }

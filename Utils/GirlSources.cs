@@ -6,6 +6,8 @@ internal static class GirlSources
 
     internal const int Fixed = 1;
 
+    internal static string Default => IndexToString(Selected);
+
     internal static string IndexToString(int index)
     {
         return index switch
@@ -20,11 +22,9 @@ internal static class GirlSources
     {
         return s switch
         {
-            "Selected" => Selected,
-            "Fixed" => Fixed,
+            not null when s.InvEquals("Selected") => Selected,
+            not null when s.InvEquals("Fixed") => Fixed,
             _ => Selected
         };
     }
-
-    internal static string Default => IndexToString(Selected);
 }

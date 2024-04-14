@@ -16,6 +16,8 @@ internal static class Shows
 
     private static readonly Vector3 FailScale = new(-0.75f, 0.75f, 100f);
 
+    internal static string Default => IndexToShow(Victory);
+
     internal static string IndexToProperty(int index)
     {
         return index switch
@@ -53,12 +55,10 @@ internal static class Shows
     {
         return show switch
         {
-            "Main" => Main,
-            "Victory" => Victory,
-            "Fail" => Fail,
+            not null when show.InvEquals("Main") => Main,
+            not null when show.InvEquals("Victory") => Victory,
+            not null when show.InvEquals("Fail") => Fail,
             _ => Victory
         };
     }
-
-    internal static string Default => IndexToShow(Victory);
 }
