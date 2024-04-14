@@ -20,7 +20,6 @@ internal abstract class GirlBaseClass(string name)
 
     private bool _parentSet;
 
-
     protected Transform ParentTransform;
 
     protected GameObject Girl { get; private set; }
@@ -33,7 +32,7 @@ internal abstract class GirlBaseClass(string name)
     internal void CreateGirl()
     {
         Logger.Debug($"{name}: Getting girl index!");
-        _girlIndex = DataHelper.selectedRoleIndex;
+        _girlIndex = GetGirlIndex();
 
         if (!_parentSet)
         {
@@ -88,6 +87,8 @@ internal abstract class GirlBaseClass(string name)
 
         return assetName;
     }
+
+    private int GetGirlIndex() => DataHelper.selectedRoleIndex;
 
     private void SetGirlScale()
     {
