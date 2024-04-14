@@ -17,13 +17,11 @@ internal static class SettingsManager
     private static readonly MelonPreferences_Category
         Category = MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
 
-    internal static readonly ShowSetting Show = new(Category);
+    internal static readonly SettingsStringEntry Show = new(Category, "ShowType", ModManager.ShowDefine);
 
-    internal static readonly GirlSourceSetting GirlSource = new(Category);
+    internal static readonly SettingsStringEntry GirlSource = new(Category, "GirlSource", ModManager.GirlSourceDefine);
 
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
-
-    private static List<SettingsStringEntry> _stringEntries;
 
     internal static bool Debug => DebugEntry.Value;
 
@@ -41,7 +39,7 @@ internal static class SettingsManager
             Category.LoadFromFile(false);
             Logger.Debug("Loaded settings from file.");
 
-            foreach (var stringSetting in _stringEntries) stringSetting.Verify();
+            SettingsStringEntry.VerifyAll();
         }
         catch (Exception e)
         {
@@ -54,12 +52,6 @@ internal static class SettingsManager
         Category.SetFilePath(SettingsPath, false, false);
 
         var absolutePath = Path.Join(UserDataDirectory, SettingsFileName);
-
-        _stringEntries =
-        [
-            Show,
-            GirlSource
-        ];
 
         try
         {

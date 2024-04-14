@@ -1,6 +1,6 @@
 ﻿namespace MenuCharacter.Enums;
 
-public enum Source
+internal enum Source
 {
     Selected = 0,
 
