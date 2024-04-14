@@ -16,25 +16,18 @@ internal static class ModManager
 
     internal static void CreateGirls()
     {
-        Logger.Debug("Before updating girls.");
+        Logger.Debug("Updating girls...");
+        
+        StageGirl.CreateGirl();
+        PreparationGirl.CreateGirl();
 
-        try
-        {
-            StageGirl.CreateGirl();
-            PreparationGirl.CreateGirl();
-        }
-        catch (Exception e)
-        {
-            Logger.Error(e);
-        }
-
-        Logger.Debug("After updating girls.");
+        Logger.Debug("Updated girls!");
     }
 
     private static IEnumerator CreateGirlsRoutine()
     {
-        CreateGirls();
         yield return null;
+        CreateGirls();
     }
 
     internal static void CreateGirlsMelon()

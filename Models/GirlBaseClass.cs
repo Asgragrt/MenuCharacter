@@ -22,9 +22,9 @@ internal abstract class GirlBaseClass(string name)
 
     protected GameObject Girl { get; private set; }
 
-    private static string GetAssetName()
+    private string GetAssetName()
     {
-        Logger.Debug("Getting character info.");
+        Logger.Debug($"{name}: Getting character info.");
         var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(DataHelper.selectedRoleIndex);
 
         return SettingsManager.ShowIndex switch
@@ -48,9 +48,17 @@ internal abstract class GirlBaseClass(string name)
 
         Logger.Debug($"{name}: Instantiating girl!");
 
-        Girl = ResourcesManager.instance
-            .LoadFromName<GameObject>(GetAssetName())
-            .FastInstantiate();
+        try
+        {
+            Girl = ResourcesManager.instance
+                .LoadFromName<GameObject>(GetAssetName())
+                .FastInstantiate();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e);
+            return;
+        }
 
         Logger.Debug($"{name}: Setting girl parent!");
         SetGirlParent();
