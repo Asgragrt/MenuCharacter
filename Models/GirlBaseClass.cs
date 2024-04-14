@@ -26,13 +26,14 @@ internal abstract class GirlBaseClass(string name)
     {
         Logger.Debug($"{name}: Getting character info.");
         var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(DataHelper.selectedRoleIndex);
-
-        return SettingsManager.ShowIndex switch
-        {
-            Shows.Main => charInfo.mainShow,
-            Shows.Victory => charInfo.victoryShow,
-            _ => charInfo.failShow
-        };
+        
+        var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.ShowIndex))
+            ?.GetValue(charInfo, null)
+            ?.ToString();
+        
+        Logger.Debug($"{name} asset name: {assetName}");
+        
+        return assetName;
     }
 
     internal void CreateGirl()

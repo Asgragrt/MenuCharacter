@@ -29,4 +29,15 @@ internal static class Shows
             _ => "Victory"
         };
     }
+
+    internal static string IndexToProperty(int index)
+    {
+        return index switch
+        {
+            Main => "mainShow",
+            Victory => "victoryShow",
+            Fail => "failShow",
+            _ => "victoryShow"
+        };
+    }
 }
