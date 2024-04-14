@@ -79,7 +79,7 @@ internal abstract class GirlBaseClass(string name)
         Logger.Debug($"{name}: Getting character info.");
         var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(_girlIndex);
 
-        var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.ShowIndex))
+        var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.Show.Index))
             ?.GetValue(charInfo, null)
             ?.ToString();
 
@@ -92,6 +92,6 @@ internal abstract class GirlBaseClass(string name)
 
     private void SetGirlScale()
     {
-        Girl.transform.localScale = Shows.IndexToScale(SettingsManager.ShowIndex);
+        Girl.transform.localScale = Shows.IndexToScale(SettingsManager.Show.Index);
     }
 }

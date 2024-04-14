@@ -1,5 +1,6 @@
 ﻿using MelonLoader;
 using MelonLoader.Utils;
+using MenuCharacter.Models;
 using MenuCharacter.Properties;
 using MenuCharacter.Utils;
 
@@ -16,18 +17,9 @@ internal static class SettingsManager
     private static readonly MelonPreferences_Category
         Category = MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
 
-    private static readonly MelonPreferences_Entry<string>
-        ShowEntry = Category.CreateEntry("ShowType", Shows.Default);
+    internal static readonly SettingsStringEntry Show = new ShowSetting(Category);
 
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
-
-    internal static int ShowIndex { get; private set; }
-
-    internal static string Show
-    {
-        get => ShowEntry.Value;
-        private set => ShowEntry.Value = value;
-    }
 
     internal static bool Debug => DebugEntry.Value;
 
@@ -45,13 +37,7 @@ internal static class SettingsManager
             Category.LoadFromFile(false);
             Logger.Debug("Loaded settings from file.");
 
-            // Clean input
-            var currentShow = Show;
-            ShowIndex = Shows.ShowToIndex(Show);
-            Show = Shows.IndexToShow(ShowIndex);
-
-            if (string.Equals(Show, currentShow)) return;
-            Logger.Warning($"{currentShow} is not a valid value for Show, using default value: Victory");
+            Show.Verify();
         }
         catch (Exception e)
         {
