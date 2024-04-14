@@ -16,7 +16,8 @@ internal static class SettingsManager
     private static readonly MelonPreferences_Category
         Category = MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
 
-    private static readonly MelonPreferences_Entry<string> ShowEntry = Category.CreateEntry("ShowType", "Victory");
+    private static readonly MelonPreferences_Entry<string>
+        ShowEntry = Category.CreateEntry("ShowType", Shows.Default);
 
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
 

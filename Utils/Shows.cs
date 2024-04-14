@@ -59,4 +59,6 @@ internal static class Shows
             _ => Victory
         };
     }
+
+    internal static string Default => IndexToShow(Victory);
 }
