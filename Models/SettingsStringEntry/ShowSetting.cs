@@ -7,7 +7,7 @@ internal class ShowSetting : SettingsStringEntry
 {
     internal ShowSetting(MelonPreferences_Category category) : base(category, "ShowType", Shows.Default) { }
 
-    protected override string IndexToString(int i) => Shows.IndexToShow(i);
+    protected override string IndexToString(int i) => Shows.IndexToString(i);
 
-    protected override int StringToIndex(string s) => Shows.ShowToIndex(s);
+    protected override int StringToIndex(string s) => Shows.StringToIndex(s);
 }

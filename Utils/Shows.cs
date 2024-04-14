@@ -4,61 +4,52 @@ namespace MenuCharacter.Utils;
 
 internal static class Shows
 {
-    internal const int Main = 0;
-
-    internal const int Victory = 1;
-
-    internal const int Fail = 2;
-
     private static readonly Vector3 MainScale = new(-50f, 50f, 100f);
 
     private static readonly Vector3 VictoryScale = new(-0.5f, 0.5f, 100f);
 
     private static readonly Vector3 FailScale = new(-0.75f, 0.75f, 100f);
 
-    internal static string Default => IndexToShow(Victory);
+    internal static string Default => IndexToString((int)EShow.Victory);
 
     internal static string IndexToProperty(int index)
     {
-        return index switch
+        return (EShow)index switch
         {
-            Main => "mainShow",
-            Victory => "victoryShow",
-            Fail => "failShow",
+            EShow.Main => "mainShow",
+            EShow.Victory => "victoryShow",
+            EShow.Fail => "failShow",
             _ => "victoryShow"
         };
     }
 
     internal static Vector3 IndexToScale(int index)
     {
-        return index switch
+        return (EShow)index switch
         {
-            Main => MainScale,
-            Victory => VictoryScale,
-            Fail => FailScale,
+            EShow.Main => MainScale,
+            EShow.Victory => VictoryScale,
+            EShow.Fail => FailScale,
             _ => VictoryScale
         };
     }
 
-    internal static string IndexToShow(int index)
-    {
-        return index switch
-        {
-            Main => "Main",
-            Victory => "Victory",
-            Fail => "Fail",
-            _ => "Victory"
-        };
-    }
+    internal static string IndexToString(int i) => Enum.GetName(typeof(EShow), i) ?? default(EShow).ToString();
 
-    internal static int ShowToIndex(string show)
+    internal static int StringToIndex(string s)
     {
-        return show switch
-        {
-            not null when show.InvEquals("Main") => Main,
-            not null when show.InvEquals("Victory") => Victory,
-            not null when show.InvEquals("Fail") => Fail,
-            _ => Victory
-        };
+        if (Enum.TryParse(s, true, out EShow result)) return (int)result;
+
+        return (int)default(EShow);
+    }
+    
+
+    private enum EShow
+    {
+        Main = 0,
+
+        Victory,
+
+        Fail
     }
 }

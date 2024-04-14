@@ -2,29 +2,21 @@
 
 internal static class GirlSources
 {
-    internal const int Selected = 0;
+    internal static string Default => IndexToString((int)Sources.Selected);
 
-    internal const int Fixed = 1;
-
-    internal static string Default => IndexToString(Selected);
-
-    internal static string IndexToString(int index)
-    {
-        return index switch
-        {
-            Selected => "Selected",
-            Fixed => "Fixed",
-            _ => "Selected"
-        };
-    }
+    internal static string IndexToString(int index) => ((Sources)index).ToString();
 
     internal static int StringToIndex(string s)
     {
-        return s switch
-        {
-            not null when s.InvEquals("Selected") => Selected,
-            not null when s.InvEquals("Fixed") => Fixed,
-            _ => Selected
-        };
+        if (Enum.TryParse(s, true, out Sources result)) return (int)result;
+
+        return (int)Sources.Selected;
+    }
+
+    private enum Sources
+    {
+        Selected = 0,
+
+        Fixed
     }
 }
