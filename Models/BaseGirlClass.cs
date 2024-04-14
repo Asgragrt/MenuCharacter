@@ -31,7 +31,7 @@ internal abstract class BaseGirlClass(string name)
 
     protected virtual void SetGirlPosition()
     {
-        Girl.transform.position = new Vector3(6.7f, -5f, 100f);
+        Girl.transform.position = Positions.GetPosition(SettingsManager.Show.Index, _girlIndex);
     }
 
     internal void CreateGirl()

@@ -7,6 +7,8 @@ internal class StageGirl : BaseGirlClass
 {
     internal StageGirl() : base("MenuGirlObject") { }
 
+    private bool _first = true;
+
     protected override void SetGirlParent()
     {
         if (!Girl) return;
@@ -25,7 +27,13 @@ internal class StageGirl : BaseGirlClass
     protected override void SetGirlPosition()
     {
         base.SetGirlPosition();
-        if (Girl.active) return;
+
+        // TODO fix this :D
+        if (Girl.active || _first)
+        {
+            _first = false;
+            return;
+        }
 
         Girl.transform.position += new Vector3(0, -2.8f, 0);
     }
