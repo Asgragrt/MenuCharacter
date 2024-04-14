@@ -12,7 +12,7 @@ internal class GirlSourceDefine : BaseDefine<Source>
         {
             Source.Selected => DataHelper.selectedRoleIndex,
             Source.Fixed => SettingsManager.Character.Index,
-            _ => DataHelper.selectedRoleIndex,
+            _ => DataHelper.selectedRoleIndex
         };
     }
 }

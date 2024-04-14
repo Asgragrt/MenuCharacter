@@ -8,4 +8,6 @@ internal abstract class BaseDefine<T> : IDefine where T : struct, Enum, IConvert
 
     int IDefine.StringToIndex(string s) =>
         Enum.TryParse(s, true, out T result) ? result.ToInt32(null) : default(T).ToInt32(null);
+
+    string IDefine.Options() => string.Join("\n", Enum.GetNames<T>());
 }

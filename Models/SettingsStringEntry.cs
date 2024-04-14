@@ -15,9 +15,11 @@ internal class SettingsStringEntry
     {
         _name = name;
         _define = define;
-        _entry = category.CreateEntry(name, define.Default);
+        _entry = category.CreateEntry(name, define.Default, description: Description);
         Entries.Add(this);
     }
+
+    private string Description => $"\n{_name} options:\n{_define.Options()}";
 
     private static List<SettingsStringEntry> Entries { get; } = [];
 
