@@ -3,7 +3,6 @@ using Il2CppAssets.Scripts.Database;
 using Il2CppAssets.Scripts.PeroTools.Commons;
 using Il2CppAssets.Scripts.PeroTools.Managers;
 using Il2CppPeroTools2.Resources;
-using MenuCharacter.Managers;
 using MenuCharacter.Models.Defines;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
@@ -31,7 +30,7 @@ internal abstract class BaseGirlClass(string name)
 
     protected virtual void SetGirlPosition()
     {
-        Girl.transform.position = Positions.GetPosition(SettingsManager.Show.Index, _girlIndex);
+        Girl.transform.position = Positions.Position(_girlIndex);
     }
 
     internal void CreateGirl()
@@ -84,7 +83,7 @@ internal abstract class BaseGirlClass(string name)
         Logger.Debug($"{name}: Getting character info.");
         var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(_girlIndex);
 
-        var assetName = typeof(CharacterInfo).GetProperty(ShowDefine.IndexToProperty(SettingsManager.Show.Index))
+        var assetName = typeof(CharacterInfo).GetProperty(ShowDefine.Property)
             ?.GetValue(charInfo, null)
             ?.ToString();
 
@@ -95,6 +94,6 @@ internal abstract class BaseGirlClass(string name)
 
     private void SetGirlScale()
     {
-        Girl.transform.localScale = ShowDefine.IndexToScale(SettingsManager.Show.Index);
+        Girl.transform.localScale = ShowDefine.Scale;
     }
 }

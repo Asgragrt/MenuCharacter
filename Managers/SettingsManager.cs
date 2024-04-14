@@ -23,7 +23,11 @@ internal static class SettingsManager
 
     internal static readonly SettingsStringEntry Character = new(Category, "Character", ModManager.CharacterDefine);
 
+    private static readonly MelonPreferences_Entry<bool> FlipEntry = Category.CreateEntry("FlipShow", true);
+
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
+
+    internal static bool Flip => FlipEntry.Value;
 
     internal static bool Debug => DebugEntry.Value;
 
