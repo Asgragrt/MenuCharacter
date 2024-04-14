@@ -6,7 +6,7 @@ using Logger = MenuCharacter.Utils.Logger;
 
 namespace MenuCharacter.Models;
 
-internal class PreparationGirl : GirlBaseClass
+internal class PreparationGirl : BaseGirlClass
 {
     private object _routine;
 

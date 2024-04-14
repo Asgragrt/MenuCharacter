@@ -2,7 +2,7 @@
 
 namespace MenuCharacter.Models;
 
-internal class StageGirl : GirlBaseClass
+internal class StageGirl : BaseGirlClass
 {
     internal StageGirl() : base("MenuGirlObject") { }
 

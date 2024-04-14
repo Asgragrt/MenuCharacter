@@ -33,7 +33,7 @@ internal static class ModManager
 
     internal static void CreateGirlsMelon()
     {
-        // Leaving the girls update to a melon thread to avoid access violations
+        // Leaving the girls update to a melon thread with small delay to avoid access violations
         MelonCoroutines.Start(CreateGirlsRoutine());
     }
 

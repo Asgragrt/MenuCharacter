@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace MenuCharacter.Models;
 
-internal abstract class GirlBaseClass(string name)
+internal abstract class BaseGirlClass(string name)
 {
     private static readonly DBConfigCharacter DBConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
