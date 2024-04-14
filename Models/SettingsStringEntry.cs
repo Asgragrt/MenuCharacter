@@ -16,10 +16,10 @@ internal class SettingsStringEntry
         _name = name;
         _define = define;
         _entry = category.CreateEntry(name, define.Default);
-        _entries.Add(this);
+        Entries.Add(this);
     }
 
-    private static List<SettingsStringEntry> _entries { get; } = [];
+    private static List<SettingsStringEntry> Entries { get; } = [];
 
     internal int Index { get; private set; }
 
@@ -31,7 +31,7 @@ internal class SettingsStringEntry
 
     internal static void VerifyAll()
     {
-        foreach (var entry in _entries) entry.Verify();
+        foreach (var entry in Entries) entry.Verify();
     }
 
     internal void Verify()

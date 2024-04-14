@@ -19,6 +19,8 @@ internal static class ModManager
 
     internal static GirlSourceDefine GirlSourceDefine { get; } = new();
 
+    internal static CharacterDefine CharacterDefine { get; } = new();
+
     internal static void CreateGirls()
     {
         Logger.Debug("Updating girls...");
