@@ -18,6 +18,8 @@ internal abstract class GirlBaseClass(string name)
 
     private bool _parentSet;
 
+    private int _girlIndex;
+
     protected Transform ParentTransform;
 
     protected GameObject Girl { get; private set; }
@@ -25,7 +27,7 @@ internal abstract class GirlBaseClass(string name)
     private string GetAssetName()
     {
         Logger.Debug($"{name}: Getting character info.");
-        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(DataHelper.selectedRoleIndex);
+        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(_girlIndex);
 
         var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.ShowIndex))
             ?.GetValue(charInfo, null)
@@ -38,6 +40,9 @@ internal abstract class GirlBaseClass(string name)
 
     internal void CreateGirl()
     {
+        Logger.Debug($"{name}: Getting girl index!");
+        _girlIndex = DataHelper.selectedRoleIndex;
+        
         if (!_parentSet)
         {
             Logger.Debug($"{name} doesn't have a parent.");
