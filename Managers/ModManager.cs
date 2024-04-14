@@ -2,6 +2,7 @@
 using Il2CppAssets.Scripts.UI.Panels;
 using MelonLoader;
 using MenuCharacter.Models;
+using MenuCharacter.Models.Defines;
 using MenuCharacter.Utils;
 
 namespace MenuCharacter.Managers;
@@ -13,6 +14,10 @@ internal static class ModManager
     internal static PreparationGirl PreparationGirl { get; } = new();
 
     internal static PnlStage PnlStage { get; set; }
+
+    internal static ShowDefine ShowDefine { get; } = new();
+
+    internal static GirlSourceDefine GirlSourceDefine { get; } = new();
 
     internal static void CreateGirls()
     {

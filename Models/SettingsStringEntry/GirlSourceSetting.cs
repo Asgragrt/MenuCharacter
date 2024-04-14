@@ -1,14 +1,10 @@
 ﻿using MelonLoader;
-using MenuCharacter.Utils;
+using MenuCharacter.Managers;
 
 namespace MenuCharacter.Models;
 
 internal class GirlSourceSetting : SettingsStringEntry
 {
     internal GirlSourceSetting(MelonPreferences_Category category) :
-        base(category, "GirlSource", GirlSources.Default) { }
-
-    protected override string IndexToString(int i) => GirlSources.IndexToString(i);
-
-    protected override int StringToIndex(string s) => GirlSources.StringToIndex(s);
+        base(category, "GirlSource", ModManager.GirlSourceDefine) { }
 }
