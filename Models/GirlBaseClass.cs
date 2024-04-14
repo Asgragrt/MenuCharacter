@@ -26,13 +26,13 @@ internal abstract class GirlBaseClass(string name)
     {
         Logger.Debug($"{name}: Getting character info.");
         var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(DataHelper.selectedRoleIndex);
-        
+
         var assetName = typeof(CharacterInfo).GetProperty(Shows.IndexToProperty(SettingsManager.ShowIndex))
             ?.GetValue(charInfo, null)
             ?.ToString();
-        
+
         Logger.Debug($"{name} asset name: {assetName}");
-        
+
         return assetName;
     }
 
@@ -74,12 +74,7 @@ internal abstract class GirlBaseClass(string name)
 
     private void SetGirlScale()
     {
-        Girl.transform.localScale = SettingsManager.ShowIndex switch
-        {
-            Shows.Main => new Vector3(-50f, 50f, 100f),
-            Shows.Victory => new Vector3(-0.5f, 0.5f, 100f),
-            _ => new Vector3(-0.75f, 0.75f, 100f)
-        };
+        Girl.transform.localScale = Shows.IndexToScale(SettingsManager.ShowIndex);
     }
 
     protected virtual void SetGirlParent()
