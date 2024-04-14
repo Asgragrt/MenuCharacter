@@ -29,6 +29,11 @@ internal abstract class BaseGirlClass(string name)
         Girl.transform.SetParent(ParentTransform);
     }
 
+    protected virtual void SetGirlPosition()
+    {
+        Girl.transform.position = new Vector3(6.7f, -5f, 100f);
+    }
+
     internal void CreateGirl()
     {
         Logger.Debug($"{name}: Getting girl index!");
@@ -65,7 +70,7 @@ internal abstract class BaseGirlClass(string name)
         Logger.Debug($"{name}: Scaling girl!");
         Girl.name = name;
         SetGirlScale();
-        Girl.transform.position = new Vector3(6.7f, -5f, 100f);
+        SetGirlPosition();
     }
 
     internal void SetParent(Transform parentTransform)

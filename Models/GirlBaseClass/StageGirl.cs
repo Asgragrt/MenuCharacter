@@ -1,4 +1,5 @@
-﻿using MenuCharacter.Utils;
+﻿using UnityEngine;
+using Logger = MenuCharacter.Utils.Logger;
 
 namespace MenuCharacter.Models;
 
@@ -19,5 +20,13 @@ internal class StageGirl : BaseGirlClass
 
         Girl.transform.SetParent(targetParent);
         Girl.transform.SetAsFirstSibling();
+    }
+
+    protected override void SetGirlPosition()
+    {
+        base.SetGirlPosition();
+        if (Girl.active) return;
+
+        Girl.transform.position += new Vector3(0, -2.8f, 0);
     }
 }
