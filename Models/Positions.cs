@@ -18,8 +18,6 @@ internal static class Positions
         };
     }
 
-    //internal static Vector3 Position(int character) => GetPosition(SettingsManager.Track.Index, character);
-
     private static Vector3 GetFailPosition(Character c)
     {
         switch (c)
