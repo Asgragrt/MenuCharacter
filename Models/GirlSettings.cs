@@ -68,12 +68,16 @@ internal class GirlSetting
         {
             var position = Positions.GetPosition(ShowIndex, GirlIndex);
 
-            return (Side)_side.Index switch
+            switch ((Side)_side.Index)
             {
-                Side.Right => position,
-                Side.Left => new Vector3(-position.x, position.y, position.z),
-                _ => position
-            };
+                case Side.Right:
+                    return position;
+                case Side.Left:
+                    position.x *= -1;
+                    return position;
+                default:
+                    return position;
+            }
         }
     }
 }
