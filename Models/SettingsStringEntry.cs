@@ -15,7 +15,11 @@ internal class SettingsStringEntry
     {
         _name = name;
         _define = define;
-        _entry = category.CreateEntry(name, define.Default, description: showDesc ? Description : "");
+
+        _entry = showDesc
+            ? category.CreateEntry(name, define.Default, description: Description)
+            : category.CreateEntry(name, define.Default);
+
         Entries.Add(this);
     }
 
