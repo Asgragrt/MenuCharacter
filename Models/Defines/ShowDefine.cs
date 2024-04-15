@@ -1,16 +1,11 @@
 ﻿using MenuCharacter.Enums;
-using MenuCharacter.Managers;
 using UnityEngine;
 
 namespace MenuCharacter.Models.Defines;
 
 internal class ShowDefine() : BaseDefine<Show>(Show.Victory)
 {
-    internal static string Property => IndexToProperty(SettingsManager.Show.Index);
-
-    internal static Vector3 Scale => IndexToScale(SettingsManager.Show.Index);
-
-    private static string IndexToProperty(int index)
+    internal static string IndexToProperty(int index)
     {
         return (Show)index switch
         {
@@ -21,16 +16,16 @@ internal class ShowDefine() : BaseDefine<Show>(Show.Victory)
         };
     }
 
-    private static Vector3 IndexToScale(int index)
+    internal static Vector3 IndexToScale(int index, bool flip)
     {
-        var flip = SettingsManager.Flip ? -1 : 1;
+        var sign = flip ? -1 : 1;
 
         return (Show)index switch
         {
-            Show.Main => new Vector3(50f * flip, 50f, 100f),
-            Show.Victory => new Vector3(0.5f * flip, 0.5f, 100f),
-            Show.Fail => new Vector3(0.75f * flip, 0.75f, 100f),
-            _ => new Vector3(50f * flip, 50f, 100f)
+            Show.Main => new Vector3(50f * sign, 50f, 100f),
+            Show.Victory => new Vector3(0.5f * sign, 0.5f, 100f),
+            Show.Fail => new Vector3(0.75f * sign, 0.75f, 100f),
+            _ => new Vector3(50f * sign, 50f, 100f)
         };
     }
 }

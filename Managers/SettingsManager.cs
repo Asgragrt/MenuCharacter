@@ -12,38 +12,20 @@ internal static class SettingsManager
 {
     internal const string SettingsFileName = $"{MelonBuildInfo.ModName}.cfg";
 
-    private const string SettingsPath = $"UserData/{SettingsFileName}";
+    internal const string SettingsPath = $"UserData/{SettingsFileName}";
 
     private static readonly MelonPreferences_Category
         Category = MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
 
-    internal static readonly SettingsStringEntry Show = new(Category, "ShowType", ModManager.ShowDefine);
+    internal static readonly SettingsStringEntry Track = new(Category, "TrackType", ModManager.TrackDefine);
 
-    internal static readonly SettingsStringEntry GirlSource = new(Category, "GirlSource", ModManager.GirlSourceDefine);
+    internal static readonly GirlSetting StageGirlSettings = new("StageGirl");
 
-    internal static readonly SettingsStringEntry StageGirlEntry =
-        new(Category, "StageGirl", ModManager.CharacterDefine);
-
-    internal static readonly SettingsStringEntry PreparationGirlEntry =
-        new(Category, "PreparationGirl", ModManager.CharacterDefine, false);
-
-    private static readonly MelonPreferences_Entry<bool> StageEntry =
-        Category.CreateEntry("EnableStageGirl", true);
-
-    private static readonly MelonPreferences_Entry<bool> PreparationEntry =
-        Category.CreateEntry("EnablePreparationGirl", true);
-
-    private static readonly MelonPreferences_Entry<bool> FlipEntry = Category.CreateEntry("FlipShow", true);
+    internal static readonly GirlSetting PrepGirlSettings = new("PreparationGirl", false);
 
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
 
-    internal static bool IsStageGirlEnabled => StageEntry.Value;
-
-    internal static bool IsPrepGirlEnabled => PreparationEntry.Value;
-
-    internal static bool IsAnyGirlEnabled => IsStageGirlEnabled || IsPrepGirlEnabled;
-
-    internal static bool Flip => FlipEntry.Value;
+    internal static bool IsAnyGirlEnabled => StageGirlSettings.IsEnabled || PrepGirlSettings.IsEnabled;
 
     internal static bool Debug => DebugEntry.Value;
 

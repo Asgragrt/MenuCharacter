@@ -9,15 +9,15 @@ namespace MenuCharacter.Managers;
 
 internal static class ModManager
 {
-    internal static StageGirl StageGirl { get; } = new();
+    internal static StageGirl StageGirl { get; private set; }
 
-    internal static PreparationGirl PreparationGirl { get; } = new();
+    internal static PreparationGirl PreparationGirl { get; private set; }
 
     internal static PnlStage PnlStage { get; set; }
 
     internal static ShowDefine ShowDefine { get; } = new();
 
-    internal static GirlSourceDefine GirlSourceDefine { get; } = new();
+    internal static TrackDefine TrackDefine { get; } = new();
 
     internal static CharacterDefine CharacterDefine { get; } = new();
 
@@ -27,11 +27,17 @@ internal static class ModManager
         MelonCoroutines.Start(CreateGirlsRoutine());
     }
 
+    internal static void Init()
+    {
+        StageGirl = new StageGirl(SettingsManager.StageGirlSettings);
+        PreparationGirl = new PreparationGirl(SettingsManager.PrepGirlSettings);
+    }
+
     internal static void UpdateGirls()
     {
         Logger.Debug("Updating girls...");
 
-        if (SettingsManager.IsStageGirlEnabled)
+        if (SettingsManager.StageGirlSettings.IsEnabled)
         {
             StageGirl.CreateGirl();
             Logger.Debug("Updated stage girl.");
@@ -42,7 +48,7 @@ internal static class ModManager
             Logger.Debug("Destroyed stage girl.");
         }
 
-        if (SettingsManager.IsPrepGirlEnabled)
+        if (SettingsManager.PrepGirlSettings.IsEnabled)
         {
             PreparationGirl.CreateGirl();
             Logger.Debug("Updated preparation girl.");

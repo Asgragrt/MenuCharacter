@@ -1,6 +1,6 @@
 ﻿namespace MenuCharacter.Enums;
 
-internal enum Source
+internal enum Track
 {
     Selected = 0,
 

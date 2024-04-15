@@ -1,14 +1,10 @@
-﻿using MenuCharacter.Managers;
-using MenuCharacter.Models.Defines;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MenuCharacter.Models;
 
 internal class PreparationGirl : BaseGirlClass
 {
-    internal PreparationGirl() : base("PreparationGirlObject") { }
-    
-    protected override int GetGirlIndex() => GirlSourceDefine.GetGirlIndex(SettingsManager.PreparationGirlEntry.Index);
+    internal PreparationGirl(GirlSetting girlSetting) : base("PreparationGirlObject", girlSetting) { }
 
     protected override void SetGirlParent()
     {

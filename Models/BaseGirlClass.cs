@@ -3,27 +3,22 @@ using Il2CppAssets.Scripts.Database;
 using Il2CppAssets.Scripts.PeroTools.Commons;
 using Il2CppAssets.Scripts.PeroTools.Managers;
 using Il2CppPeroTools2.Resources;
-using MenuCharacter.Models.Defines;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 using Object = UnityEngine.Object;
 
 namespace MenuCharacter.Models;
 
-internal abstract class BaseGirlClass(string name)
+internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 {
     private static readonly DBConfigCharacter DBConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
-
-    private int _girlIndex;
 
     private bool _parentSet;
 
     protected Transform ParentTransform;
 
     protected GameObject Girl { get; private set; }
-
-    protected abstract int GetGirlIndex();
 
     protected virtual void SetGirlParent()
     {
@@ -32,14 +27,11 @@ internal abstract class BaseGirlClass(string name)
 
     protected virtual void SetGirlPosition()
     {
-        Girl.transform.position = Positions.Position(_girlIndex);
+        Girl.transform.position = girlSetting.Position;
     }
 
     internal void CreateGirl()
     {
-        Logger.Debug($"{name}: Getting girl index!");
-        _girlIndex = GetGirlIndex();
-
         if (!_parentSet)
         {
             Logger.Debug($"{name} doesn't have a parent.");
@@ -70,7 +62,7 @@ internal abstract class BaseGirlClass(string name)
 
         Logger.Debug($"{name}: Scaling girl!");
         Girl.name = name;
-        SetGirlScale();
+        Girl.transform.localScale = girlSetting.Scale;
         SetGirlPosition();
     }
 
@@ -88,19 +80,14 @@ internal abstract class BaseGirlClass(string name)
     private string GetAssetName()
     {
         Logger.Debug($"{name}: Getting character info.");
-        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(_girlIndex);
+        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(girlSetting.GirlIndex);
 
-        var assetName = typeof(CharacterInfo).GetProperty(ShowDefine.Property)
+        var assetName = typeof(CharacterInfo).GetProperty(girlSetting.Property)
             ?.GetValue(charInfo, null)
             ?.ToString();
 
         Logger.Debug($"{name} asset name: {assetName}");
 
         return assetName;
-    }
-
-    private void SetGirlScale()
-    {
-        Girl.transform.localScale = ShowDefine.Scale;
     }
 }

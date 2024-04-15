@@ -10,6 +10,7 @@ public sealed class Main : MelonMod
     public override void OnInitializeMelon()
     {
         SettingsManager.InitAndLoad();
+        ModManager.Init();
         Logger.Msg($"{MelonBuildInfo.ModName} loaded correctly!");
     }
 

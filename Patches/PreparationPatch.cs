@@ -13,7 +13,7 @@ internal static class PreparationPatch
     {
         ModManager.PreparationGirl.SetParent(__instance.transform);
 
-        if (!SettingsManager.IsPrepGirlEnabled) return;
+        if (!SettingsManager.PrepGirlSettings.IsEnabled) return;
         ModManager.PreparationGirl.CreateGirl();
     }
 }
