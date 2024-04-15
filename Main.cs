@@ -21,10 +21,9 @@ public sealed class Main : MelonMod
         WatcherManager.WatcherEvent += (_, _) =>
         {
             SettingsManager.Load();
-
-            // TODO add check if something changed before creating a new girl
+            
             // Leaving the girls update to a melon thread to avoid access violations
-            ModManager.CreateGirlsMelon();
+            ModManager.UpdateGirlsMelon();
 
             Logger.Msg($"{MelonBuildInfo.ModName} reloaded correctly!");
         };

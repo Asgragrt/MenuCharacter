@@ -14,6 +14,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     private static readonly DBConfigCharacter DBConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
 
+    protected readonly GirlSetting GirlSetting = girlSetting;
+
     protected Transform ParentTransform;
 
     private bool _parentSet;
@@ -27,12 +29,12 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     protected virtual void SetPosition()
     {
-        Girl.transform.position = girlSetting.Position;
+        Girl.transform.position = GirlSetting.Position;
     }
 
     internal void Create()
     {
-        if (!girlSetting.IsEnabled) return;
+        if (!GirlSetting.IsEnabled) return;
 
         if (!_parentSet)
         {
@@ -88,17 +90,17 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     internal void Update()
     {
-        if (!girlSetting.IsEnabled)
+        if (!GirlSetting.IsEnabled)
         {
             Destroy();
             Logger.Debug($"Destroyed {name} girl.");
             return;
         }
 
-        var setting = girlSetting.GetSettingStatusAndReset();
+        var setting = GirlSetting.GetSettingStatusAndReset();
 
         if ((setting & (int)Setting.GirlChange) != 0 // If girl changed
-            || girlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0) // Or if it went from disabled to enabled
+            || GirlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0) // Or if it went from disabled to enabled
         {
             Create();
             Logger.Debug($"Updated {name} girl.");
@@ -114,9 +116,9 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     private string GetAssetName()
     {
         Logger.Debug($"{name}: Getting character info.");
-        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(girlSetting.GirlIndex);
+        var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(GirlSetting.GirlIndex);
 
-        var assetName = typeof(CharacterInfo).GetProperty(girlSetting.Property)
+        var assetName = typeof(CharacterInfo).GetProperty(GirlSetting.Property)
             ?.GetValue(charInfo, null)
             ?.ToString();
 
@@ -125,5 +127,5 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         return assetName;
     }
 
-    private void SetScale() => Girl.transform.localScale = girlSetting.Scale;
+    private void SetScale() => Girl.transform.localScale = GirlSetting.Scale;
 }

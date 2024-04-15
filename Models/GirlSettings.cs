@@ -9,8 +9,6 @@ namespace MenuCharacter.Models;
 
 internal class GirlSetting
 {
-    private readonly MelonPreferences_Category _category;
-
     private readonly MelonPreferences_Entry<bool> _flip;
 
     private readonly SettingsStringEntry _girl;
@@ -19,24 +17,20 @@ internal class GirlSetting
 
     private readonly MelonPreferences_Entry<bool> _isEnabled;
 
-    private readonly string _name;
-
     private readonly SettingsStringEntry _side;
 
     private int _settingChanged = (int)Setting.None;
 
     internal GirlSetting(string name, bool descEnable = true)
     {
-        _name = name;
+        var category = MelonPreferences.CreateCategory(name);
+        category.SetFilePath(SettingsManager.SettingsPath, false, false);
 
-        _category = MelonPreferences.CreateCategory(_name);
-        _category.SetFilePath(SettingsManager.SettingsPath, false, false);
-
-        _isEnabled = _category.CreateEntry("IsEnabled", true);
-        _girlShow = new SettingsStringEntry(_category, "GirlShow", ModManager.ShowDefine, descEnable);
-        _girl = new SettingsStringEntry(_category, _name, ModManager.CharacterDefine, descEnable);
-        _flip = _category.CreateEntry("FlipGirl", true);
-        _side = new SettingsStringEntry(_category, "ScreenSide", ModManager.SideDefine, descEnable);
+        _isEnabled = category.CreateEntry("IsEnabled", true);
+        _girlShow = new SettingsStringEntry(category, "GirlShow", ModManager.ShowDefine, descEnable);
+        _girl = new SettingsStringEntry(category, name, ModManager.CharacterDefine, descEnable);
+        _flip = category.CreateEntry("FlipGirl", true);
+        _side = new SettingsStringEntry(category, "ScreenSide", ModManager.SideDefine, descEnable);
 
         _girlShow.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
