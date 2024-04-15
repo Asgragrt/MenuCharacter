@@ -12,6 +12,8 @@ internal static class PreparationPatch
     internal static void AwakePostfix(PnlPreparation __instance)
     {
         ModManager.PreparationGirl.SetParent(__instance.transform);
+
+        if (!SettingsManager.IsPrepGirlEnabled) return;
         ModManager.PreparationGirl.CreateGirl();
     }
 }

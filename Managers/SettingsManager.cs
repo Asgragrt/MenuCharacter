@@ -23,9 +23,21 @@ internal static class SettingsManager
 
     internal static readonly SettingsStringEntry Character = new(Category, "Character", ModManager.CharacterDefine);
 
+    private static readonly MelonPreferences_Entry<bool> StageEntry =
+        Category.CreateEntry("EnableStageGirl", true);
+
+    private static readonly MelonPreferences_Entry<bool> PreparationEntry =
+        Category.CreateEntry("EnablePreparationGirl", true);
+
     private static readonly MelonPreferences_Entry<bool> FlipEntry = Category.CreateEntry("FlipShow", true);
 
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
+
+    internal static bool IsStageGirlEnabled => StageEntry.Value;
+
+    internal static bool IsPrepGirlEnabled => PreparationEntry.Value;
+
+    internal static bool IsAnyGirlEnabled => IsStageGirlEnabled || IsPrepGirlEnabled;
 
     internal static bool Flip => FlipEntry.Value;
 
