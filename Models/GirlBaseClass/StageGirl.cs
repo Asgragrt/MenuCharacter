@@ -50,8 +50,8 @@ internal class StageGirl : BaseGirlClass
         Logger.Debug("Waiting for girl active.");
         while (Girl && !Girl.active) yield return null;
 
+        if (!Girl) yield break;
         Logger.Debug("Waiting for parent position to settle.");
-
         var pos = Girl.transform.parent.position.y;
 
         while (Girl && !Mathf.Approximately(pos, -5.4f))
