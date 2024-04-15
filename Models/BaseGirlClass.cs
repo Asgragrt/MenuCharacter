@@ -43,6 +43,13 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         Logger.Debug($"{name}: Destroying girl!");
         Destroy();
 
+        
+        if (!ParentTransform)
+        {
+            Logger.Debug($"{name}: Parent doesn't exist!");
+            return;
+        }
+        
         Logger.Debug($"{name}: Instantiating girl!");
 
         try
