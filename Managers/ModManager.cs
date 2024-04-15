@@ -37,27 +37,9 @@ internal static class ModManager
     {
         Logger.Debug("Updating girls...");
 
-        if (SettingsManager.StageGirlSettings.IsEnabled)
-        {
-            StageGirl.CreateGirl();
-            Logger.Debug("Updated stage girl.");
-        }
-        else
-        {
-            StageGirl.DestroyGirl();
-            Logger.Debug("Destroyed stage girl.");
-        }
+        StageGirl.Update();
 
-        if (SettingsManager.PrepGirlSettings.IsEnabled)
-        {
-            PreparationGirl.CreateGirl();
-            Logger.Debug("Updated preparation girl.");
-        }
-        else
-        {
-            PreparationGirl.DestroyGirl();
-            Logger.Debug("Destroyed preparation girl.");
-        }
+        PreparationGirl.Update();
 
         Logger.Debug("Updated girls!");
     }

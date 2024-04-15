@@ -12,8 +12,6 @@ internal static class StagePatch
     {
         ModManager.PnlStage = __instance;
         ModManager.StageGirl.SetParent(__instance.transform);
-
-        if (!SettingsManager.StageGirlSettings.IsEnabled) return;
-        ModManager.StageGirl.CreateGirl();
+        ModManager.StageGirl.Create();
     }
 }

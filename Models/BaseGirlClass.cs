@@ -20,18 +20,20 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     protected GameObject Girl { get; private set; }
 
-    protected virtual void SetGirlParent()
+    protected virtual void SetParent()
     {
         Girl.transform.SetParent(ParentTransform);
     }
 
-    protected virtual void SetGirlPosition()
+    protected virtual void SetPosition()
     {
         Girl.transform.position = girlSetting.Position;
     }
 
-    internal void CreateGirl()
+    internal void Create()
     {
+        if (!girlSetting.IsEnabled) return;
+
         if (!_parentSet)
         {
             Logger.Debug($"{name} doesn't have a parent.");
@@ -39,7 +41,7 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
 
         Logger.Debug($"{name}: Destroying girl!");
-        DestroyGirl();
+        Destroy();
 
         Logger.Debug($"{name}: Instantiating girl!");
 
@@ -56,17 +58,17 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
 
         Logger.Debug($"{name}: Setting girl parent!");
-        SetGirlParent();
+        SetParent();
 
         if (Girl.TryGetComponent(out MeshRenderer mr)) mr.sortingOrder = 100;
 
         Logger.Debug($"{name}: Scaling girl!");
         Girl.name = name;
         Girl.transform.localScale = girlSetting.Scale;
-        SetGirlPosition();
+        SetPosition();
     }
 
-    internal void DestroyGirl()
+    internal void Destroy()
     {
         Object.Destroy(Girl);
     }
@@ -75,6 +77,20 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     {
         ParentTransform = parentTransform;
         _parentSet = true;
+    }
+
+    internal void Update()
+    {
+        Create();
+
+        if (girlSetting.IsEnabled)
+        {
+            Logger.Debug("Updated stage girl.");
+            return;
+        }
+
+        Destroy();
+        Logger.Debug("Destroyed stage girl.");
     }
 
     private string GetAssetName()

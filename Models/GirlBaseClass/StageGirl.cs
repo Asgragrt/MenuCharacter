@@ -11,7 +11,7 @@ internal class StageGirl : BaseGirlClass
 
     internal StageGirl(GirlSetting girlSetting) : base("MenuGirlObject", girlSetting) { }
 
-    protected override void SetGirlParent()
+    protected override void SetParent()
     {
         if (!Girl) return;
         var targetParent = ParentTransform.Find("StageUi")?.Find("Info").Find("Bottom");
@@ -26,7 +26,7 @@ internal class StageGirl : BaseGirlClass
         Girl.transform.SetAsFirstSibling();
     }
 
-    protected override void SetGirlPosition()
+    protected override void SetPosition()
     {
         try
         {
@@ -69,7 +69,7 @@ internal class StageGirl : BaseGirlClass
         }
 
         Logger.Debug("Setting girl position coroutine.");
-        base.SetGirlPosition();
+        base.SetPosition();
         Logger.Debug("Finish position coroutine.");
     }
 }
