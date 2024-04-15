@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using MelonLoader;
+using MenuCharacter.Managers;
+using MenuCharacter.Models.Defines;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 
@@ -10,6 +12,8 @@ internal class StageGirl : BaseGirlClass
     private object _routine;
 
     internal StageGirl() : base("MenuGirlObject") { }
+
+    protected override int GetGirlIndex() => GirlSourceDefine.GetGirlIndex(SettingsManager.StageGirlEntry.Index);
 
     protected override void SetGirlParent()
     {

@@ -23,6 +23,8 @@ internal abstract class BaseGirlClass(string name)
 
     protected GameObject Girl { get; private set; }
 
+    protected abstract int GetGirlIndex();
+
     protected virtual void SetGirlParent()
     {
         Girl.transform.SetParent(ParentTransform);
@@ -36,7 +38,7 @@ internal abstract class BaseGirlClass(string name)
     internal void CreateGirl()
     {
         Logger.Debug($"{name}: Getting girl index!");
-        _girlIndex = GirlSourceDefine.GetGirlIndex();
+        _girlIndex = GetGirlIndex();
 
         if (!_parentSet)
         {
