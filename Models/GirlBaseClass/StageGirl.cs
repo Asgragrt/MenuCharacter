@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using MelonLoader;
+using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 
 namespace MenuCharacter.Models;
 
 internal class StageGirl : BaseGirlClass
 {
-    private bool _first = true;
+    private object _routine;
 
     internal StageGirl() : base("MenuGirlObject") { }
 
@@ -26,15 +28,49 @@ internal class StageGirl : BaseGirlClass
 
     protected override void SetGirlPosition()
     {
-        base.SetGirlPosition();
-
-        // TODO fix this :D
-        if (Girl.active || _first)
+        try
         {
-            _first = false;
-            return;
+            MelonCoroutines.Stop(_routine);
+        }
+        catch
+        {
+            // Ignore coroutine error
         }
 
-        Girl.transform.position += new Vector3(0, -2.8f, 0);
+        _routine = MelonCoroutines.Start(SetPositionRoutine());
+    }
+
+    private IEnumerator SetPositionRoutine()
+    {
+        Logger.Debug("Start position coroutine.");
+        Logger.Debug("Waiting for girl active.");
+        while (Girl && !Girl.active) yield return null;
+
+        Logger.Debug("Waiting for parent position to settle.");
+
+        var pos = Girl.transform.parent.position.y;
+
+        while (Girl && !Mathf.Approximately(pos, -5.4f))
+        {
+            yield return null;
+
+            if (!Girl.transform.parent)
+            {
+                Logger.Debug("Parent not found on coroutine.");
+                yield break;
+            }
+
+            pos = Girl.transform.parent.position.y;
+        }
+
+        if (!Girl)
+        {
+            Logger.Debug("Girl object destroyed while on coroutine.");
+            yield break;
+        }
+
+        Logger.Debug("Setting girl position coroutine.");
+        base.SetGirlPosition();
+        Logger.Debug("Finish position coroutine.");
     }
 }
