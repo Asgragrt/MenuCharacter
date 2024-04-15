@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Il2CppAssets.Scripts.Database;
+using MenuCharacter.Enums;
 using MenuCharacter.Managers;
 
 namespace MenuCharacter.Patches;
@@ -9,7 +10,7 @@ internal static class CharacterChangePatch
 {
     internal static void Postfix()
     {
-        if (!SettingsManager.IsAnyGirlEnabled) return;
+        if (!SettingsManager.IsAnyGirlEnabled || (Track)SettingsManager.Track.Index != Track.Selected) return;
         ModManager.UpdateGirls();
     }
 }
