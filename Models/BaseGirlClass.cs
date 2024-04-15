@@ -45,7 +45,7 @@ internal abstract class BaseGirlClass(string name)
         }
 
         Logger.Debug($"{name}: Destroying girl!");
-        Object.Destroy(Girl);
+        DestroyGirl();
 
         Logger.Debug($"{name}: Instantiating girl!");
 
@@ -70,6 +70,11 @@ internal abstract class BaseGirlClass(string name)
         Girl.name = name;
         SetGirlScale();
         SetGirlPosition();
+    }
+
+    internal void DestroyGirl()
+    {
+        Object.Destroy(Girl);
     }
 
     internal void SetParent(Transform parentTransform)
