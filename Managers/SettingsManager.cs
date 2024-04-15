@@ -14,8 +14,8 @@ internal static class SettingsManager
 
     internal const string SettingsPath = $"UserData/{SettingsFileName}";
 
-    private static readonly MelonPreferences_Category
-        Category = MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
+    private static readonly MelonPreferences_Category Category =
+        MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
 
     internal static readonly SettingsStringEntry Track = new(Category, "TrackType", ModManager.TrackDefine);
 

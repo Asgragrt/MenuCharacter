@@ -4,7 +4,6 @@ using MenuCharacter.Enums;
 using MenuCharacter.Managers;
 using MenuCharacter.Models.Defines;
 using UnityEngine;
-using Logger = MenuCharacter.Utils.Logger;
 
 namespace MenuCharacter.Models;
 
@@ -43,22 +42,6 @@ internal class GirlSetting
 
     internal bool Flip => _flip.Value;
 
-    internal void Load()
-    {
-        try
-        {
-            Logger.Debug($"Loading {_name} settings from file.");
-            _category.LoadFromFile(false);
-            Logger.Debug($"Loaded {_name} settings from file.");
-
-            // TODO avoid repeating this shit every time :D
-            SettingsStringEntry.VerifyAll();
-        }
-        catch (Exception e)
-        {
-            Logger.Error(e);
-        }
-    }
     internal int GirlIndex
     {
         get
@@ -75,6 +58,6 @@ internal class GirlSetting
     internal string Property => ShowDefine.IndexToProperty(ShowIndex);
 
     internal Vector3 Scale => ShowDefine.IndexToScale(ShowIndex, Flip);
-    
+
     internal Vector3 Position => Positions.GetPosition(ShowIndex, GirlIndex);
 }
