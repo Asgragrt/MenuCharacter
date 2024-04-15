@@ -11,11 +11,11 @@ internal class SettingsStringEntry
 
     private readonly string _name;
 
-    internal SettingsStringEntry(MelonPreferences_Category category, string name, IDefine define)
+    internal SettingsStringEntry(MelonPreferences_Category category, string name, IDefine define, bool showDesc = true)
     {
         _name = name;
         _define = define;
-        _entry = category.CreateEntry(name, define.Default, description: Description);
+        _entry = category.CreateEntry(name, define.Default, description: showDesc ? Description : "");
         Entries.Add(this);
     }
 

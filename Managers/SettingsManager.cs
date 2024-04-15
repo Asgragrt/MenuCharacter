@@ -25,7 +25,7 @@ internal static class SettingsManager
         new(Category, "StageGirl", ModManager.CharacterDefine);
 
     internal static readonly SettingsStringEntry PreparationGirlEntry =
-        new(Category, "PreparationGirl", ModManager.CharacterDefine);
+        new(Category, "PreparationGirl", ModManager.CharacterDefine, false);
 
     private static readonly MelonPreferences_Entry<bool> StageEntry =
         Category.CreateEntry("EnableStageGirl", true);
