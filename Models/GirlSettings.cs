@@ -38,10 +38,23 @@ internal class GirlSetting
         _flip = _category.CreateEntry("FlipGirl", true);
         _side = new SettingsStringEntry(_category, "ScreenSide", ModManager.SideDefine, descEnable);
 
-        _girlShow.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.GirlShow; });
-        _girl.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Girl; });
+        _girlShow.OnEntryValueChanged.Subscribe((oldV, newV) =>
+        {
+            if (!_girlShow.SanitizedEqual(oldV, newV)) _settingChanged |= (int)Setting.GirlShow;
+        });
+
+        _girl.OnEntryValueChanged.Subscribe((oldV, newV) =>
+        {
+            if (!_girl.SanitizedEqual(oldV, newV)) _settingChanged |= (int)Setting.Girl;
+        });
+
         _flip.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Flip; });
-        _side.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Side; });
+
+        _side.OnEntryValueChanged.Subscribe((oldV, newV) =>
+        {
+            if (!_side.SanitizedEqual(oldV, newV)) _settingChanged |= (int)Setting.Side;
+        });
+
         _isEnabled.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Enabled; });
     }
 

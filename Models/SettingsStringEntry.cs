@@ -42,6 +42,10 @@ internal class SettingsStringEntry
         foreach (var entry in Entries) entry.Verify();
     }
 
+    internal string Sanitize(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
+
+    internal bool SanitizedEqual(string s1, string s2) => Sanitize(s1).InvEquals(Sanitize(s2));
+
     internal void Verify()
     {
         var currentVal = Value.Trim();
