@@ -21,6 +21,8 @@ internal static class ModManager
 
     internal static CharacterDefine CharacterDefine { get; } = new();
 
+    internal static SideDefine SideDefine { get; } = new();
+
     internal static void CreateGirlsMelon()
     {
         // Leaving the girls update to a melon thread with small delay to avoid access violations

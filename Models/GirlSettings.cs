@@ -21,6 +21,8 @@ internal class GirlSetting
 
     private readonly string _name;
 
+    private readonly SettingsStringEntry _side;
+
     internal GirlSetting(string name, bool descEnable = true)
     {
         _name = name;
@@ -32,6 +34,7 @@ internal class GirlSetting
         _girlShow = new SettingsStringEntry(_category, "GirlShow", ModManager.ShowDefine, descEnable);
         _girl = new SettingsStringEntry(_category, _name, ModManager.CharacterDefine, descEnable);
         _flip = _category.CreateEntry("FlipGirl", true);
+        _side = new SettingsStringEntry(_category, "ScreenSide", ModManager.SideDefine, descEnable);
     }
 
     internal bool IsEnabled => _isEnabled.Value;
@@ -59,5 +62,18 @@ internal class GirlSetting
 
     internal Vector3 Scale => ShowDefine.IndexToScale(ShowIndex, Flip);
 
-    internal Vector3 Position => Positions.GetPosition(ShowIndex, GirlIndex);
+    internal Vector3 Position
+    {
+        get
+        {
+            var position = Positions.GetPosition(ShowIndex, GirlIndex);
+
+            return (Side)_side.Index switch
+            {
+                Side.Right => position,
+                Side.Left => new Vector3(-position.x, position.y, position.z),
+                _ => position
+            };
+        }
+    }
 }
