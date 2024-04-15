@@ -12,7 +12,7 @@ internal class PreparationGirl : BaseGirlClass
         Girl.transform.SetParent(ParentTransform);
         ParentTransform.Find("Start")?.SetAsLastSibling();
     }
-    
+
     protected override void SetGirlPosition()
     {
         base.SetGirlPosition();

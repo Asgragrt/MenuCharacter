@@ -6,7 +6,7 @@ internal interface IDefine
 
     string IndexToString(int i);
 
-    int StringToIndex(string s);
-
     string Options();
+
+    int StringToIndex(string s);
 }

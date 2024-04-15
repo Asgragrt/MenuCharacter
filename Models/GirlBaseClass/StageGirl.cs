@@ -5,9 +5,9 @@ namespace MenuCharacter.Models;
 
 internal class StageGirl : BaseGirlClass
 {
-    internal StageGirl() : base("MenuGirlObject") { }
-
     private bool _first = true;
+
+    internal StageGirl() : base("MenuGirlObject") { }
 
     protected override void SetGirlParent()
     {
