@@ -23,6 +23,8 @@ internal class GirlSetting
 
     private readonly SettingsStringEntry _side;
 
+    private int _settingChanged = (int)Setting.None;
+
     internal GirlSetting(string name, bool descEnable = true)
     {
         _name = name;
@@ -35,6 +37,12 @@ internal class GirlSetting
         _girl = new SettingsStringEntry(_category, _name, ModManager.CharacterDefine, descEnable);
         _flip = _category.CreateEntry("FlipGirl", true);
         _side = new SettingsStringEntry(_category, "ScreenSide", ModManager.SideDefine, descEnable);
+
+        _girlShow.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.GirlShow; });
+        _girl.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Girl; });
+        _flip.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Flip; });
+        _side.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Side; });
+        _isEnabled.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Enabled; });
     }
 
     internal bool IsEnabled => _isEnabled.Value;
@@ -79,5 +87,12 @@ internal class GirlSetting
                     return position;
             }
         }
+    }
+
+    internal int GetSettingStatusAndReset()
+    {
+        var setting = _settingChanged;
+        _settingChanged = (int)Setting.None;
+        return setting;
     }
 }

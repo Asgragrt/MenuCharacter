@@ -14,9 +14,9 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     private static readonly DBConfigCharacter DBConfigCharacter = Singleton<ConfigManager>.instance
         .GetConfigObject<DBConfigCharacter>();
 
-    private bool _parentSet;
-
     protected Transform ParentTransform;
+
+    private bool _parentSet;
 
     protected GameObject Girl { get; private set; }
 
@@ -43,13 +43,13 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         Logger.Debug($"{name}: Destroying girl!");
         Destroy();
 
-        
+
         if (!ParentTransform)
         {
             Logger.Debug($"{name}: Parent doesn't exist!");
             return;
         }
-        
+
         Logger.Debug($"{name}: Instantiating girl!");
 
         try
@@ -71,7 +71,7 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
         Logger.Debug($"{name}: Scaling girl!");
         Girl.name = name;
-        Girl.transform.localScale = girlSetting.Scale;
+        SetScale();
         SetPosition();
     }
 
@@ -88,16 +88,27 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     internal void Update()
     {
-        Create();
-
-        if (girlSetting.IsEnabled)
+        if (!girlSetting.IsEnabled)
         {
-            Logger.Debug("Updated stage girl.");
+            Destroy();
+            Logger.Debug($"Destroyed {name} girl.");
             return;
         }
 
-        Destroy();
-        Logger.Debug("Destroyed stage girl.");
+        var setting = girlSetting.GetSettingStatusAndReset();
+
+        if ((setting & (int)Setting.GirlChange) != 0 // If girl changed
+            || girlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0) // Or if it went from disabled to enabled
+        {
+            Create();
+            Logger.Debug($"Updated {name} girl.");
+            return;
+        }
+
+        if ((setting & (int)Setting.PositionChange) == 0) return;
+        SetScale();
+        SetPosition();
+        Logger.Debug($"Updated {name} girl position/scale.");
     }
 
     private string GetAssetName()
@@ -113,4 +124,6 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
         return assetName;
     }
+
+    private void SetScale() => Girl.transform.localScale = girlSetting.Scale;
 }

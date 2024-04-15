@@ -23,11 +23,13 @@ internal class SettingsStringEntry
         Entries.Add(this);
     }
 
+    internal MelonEvent<string, string> OnEntryValueChanged => _entry.OnEntryValueChanged;
+
+    internal int Index { get; private set; }
+
     private string Description => $"\n{_name} options:\n{_define.Options()}";
 
     private static List<SettingsStringEntry> Entries { get; } = [];
-
-    internal int Index { get; private set; }
 
     private string Value
     {
