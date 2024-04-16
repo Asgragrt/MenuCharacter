@@ -21,6 +21,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     private bool _parentSet;
 
+    private int _lastIdx = -1;
+
     protected GameObject Girl { get; private set; }
 
     protected virtual void SetParent()
@@ -32,6 +34,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     {
         Girl.transform.position = GirlSetting.Position;
     }
+
+    private bool IndexChanged => _lastIdx != GirlSetting.GirlIndex;
 
     internal void Create()
     {
@@ -76,6 +80,7 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         Girl.name = name;
         SetScale();
         SetPosition();
+        _lastIdx = GirlSetting.GirlIndex;
     }
 
     internal void Destroy()
@@ -105,7 +110,7 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
         if ((setting & (int)Setting.GirlChange) != 0 // If girl changed
             || GirlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0 // Or if it went from disabled to enabled
-            || GirlSetting.TrackIndex == (int)Track.Selected) // Or if it uses selected
+            || IndexChanged) // Or if it uses selected
         {
             Create();
             Logger.Debug($"Updated {name} girl.");
