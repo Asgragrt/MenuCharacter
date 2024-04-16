@@ -4,6 +4,7 @@ using MenuCharacter.Enums;
 using MenuCharacter.Managers;
 using MenuCharacter.Models.Defines;
 using UnityEngine;
+using Logger = MenuCharacter.Utils.Logger;
 
 namespace MenuCharacter.Models;
 
@@ -19,6 +20,8 @@ internal class GirlSetting
 
     private readonly SettingsStringEntry _side;
 
+    private readonly SettingsStringEntry _track;
+
     private int _settingChanged = (int)Setting.None;
 
     internal GirlSetting(string name, bool descEnable = true)
@@ -27,10 +30,17 @@ internal class GirlSetting
         category.SetFilePath(SettingsManager.SettingsPath, false, false);
 
         _isEnabled = category.CreateEntry("IsEnabled", true);
+        _track = new SettingsStringEntry(category, "TrackType", ModManager.TrackDefine, descEnable);
         _girlShow = new SettingsStringEntry(category, "GirlShow", ModManager.ShowDefine, descEnable);
         _girl = new SettingsStringEntry(category, name, ModManager.CharacterDefine, descEnable);
         _flip = category.CreateEntry("FlipGirl", true);
         _side = new SettingsStringEntry(category, "ScreenSide", ModManager.SideDefine, descEnable);
+
+        _track.OnEntryValueChanged.Subscribe((oldV, newV) =>
+        {
+            Logger.Debug($"TrackType changed to {newV}");
+            if (!_track.SanitizedEqual(oldV, newV)) _settingChanged |= (int)Setting.Track;
+        });
 
         _girlShow.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
@@ -58,13 +68,15 @@ internal class GirlSetting
 
     internal int FixedGirlIndex => _girl.Index;
 
+    internal int TrackIndex => _track.Index;
+
     internal bool Flip => _flip.Value;
 
     internal int GirlIndex
     {
         get
         {
-            return (Track)SettingsManager.Track.Index switch
+            return (Track)TrackIndex switch
             {
                 Track.Selected => DataHelper.selectedRoleIndex,
                 Track.Fixed => FixedGirlIndex,

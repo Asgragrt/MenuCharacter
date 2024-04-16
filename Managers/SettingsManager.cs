@@ -14,14 +14,12 @@ internal static class SettingsManager
 
     internal const string SettingsPath = $"UserData/{SettingsFileName}";
 
-    private static readonly MelonPreferences_Category Category =
-        MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
-
-    internal static readonly SettingsStringEntry Track = new(Category, "TrackType", ModManager.TrackDefine);
-
     internal static readonly GirlSetting StageGirlSettings = new("StageGirl");
 
     internal static readonly GirlSetting PrepGirlSettings = new("PreparationGirl", false);
+
+    private static readonly MelonPreferences_Category Category =
+        MelonPreferences.CreateCategory(MelonBuildInfo.ModName);
 
     private static readonly MelonPreferences_Entry<bool> DebugEntry = Category.CreateEntry("DebugLog", false);
 

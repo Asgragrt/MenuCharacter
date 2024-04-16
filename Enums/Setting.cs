@@ -8,13 +8,15 @@ internal enum Setting
 
     GirlShow = 2,
 
-    GirlChange = Girl | GirlShow,
-
     Flip = 4,
 
     Side = 8,
 
     PositionChange = Flip | Side,
-    
-    Enabled = 16,
+
+    Track = 16,
+
+    GirlChange = Girl | GirlShow | Track,
+
+    Enabled = 32
 }

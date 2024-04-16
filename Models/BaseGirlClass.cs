@@ -3,6 +3,7 @@ using Il2CppAssets.Scripts.Database;
 using Il2CppAssets.Scripts.PeroTools.Commons;
 using Il2CppAssets.Scripts.PeroTools.Managers;
 using Il2CppPeroTools2.Resources;
+using MenuCharacter.Enums;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 using Object = UnityEngine.Object;
@@ -90,6 +91,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     internal void Update()
     {
+        Logger.Debug($"Updating {name} girl...");
+
         if (!GirlSetting.IsEnabled)
         {
             Destroy();
@@ -98,9 +101,11 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
 
         var setting = GirlSetting.GetSettingStatusAndReset();
+        Logger.Debug($"{name} setting value: {setting}");
 
         if ((setting & (int)Setting.GirlChange) != 0 // If girl changed
-            || GirlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0) // Or if it went from disabled to enabled
+            || GirlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0 // Or if it went from disabled to enabled
+            || GirlSetting.TrackIndex == (int)Track.Selected) // Or if it uses selected
         {
             Create();
             Logger.Debug($"Updated {name} girl.");
@@ -108,7 +113,7 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
 
         if ((setting & (int)Setting.PositionChange) == 0) return;
-        
+
         if (!Girl) return; // Check if girl exists before updating
         SetScale();
         SetPosition();
