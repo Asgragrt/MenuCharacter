@@ -19,15 +19,16 @@ The config file can be found at `${Your muse dash folder}/UserData/MenuCharacter
 
 ### MenuCharacter
 
-* `TrackType` display your current character or one chosen below.
-    * `Selected` uses your current selected character.
-    * `Fixed` uses the characters on `StageGirl` and `PreparationGirl`.
 * `DebugLog` enable it if you want to spam your console with debug messages lol.
 
 ### StageGirl and PreparationGirl
 
 Each character has their own individual options.
 
+* `IsEnabled` whether to enable/disable the character.
+* `TrackType` display your current character or one chosen below.
+    * `Selected` uses your current selected character.
+    * `Fixed` uses the characters on `StageGirl` and `PreparationGirl`.
 * `GirlShow` selects the sprite.
     * `Main` uses the main sprite.
     * `Victory` uses the victory sprite.
@@ -83,12 +84,12 @@ Each character has their own individual options.
 
 ### Default
 
-* ``TrackType = "Fixed"``
 * ``DebugLog = false``
 
 #### StageGirl
 
 * ``IsEnabled = true``
+* ``TrackType = "Fixed"``
 * ``GirlShow = "Victory"``
 * ``StageGirl = "MarijaLittleDevil"``
 * ``FlipGirl = true``
@@ -98,12 +99,12 @@ Each character has their own individual options.
 
 ### Flip
 
-* ``TrackType = "Fixed"``
 * ``DebugLog = false``
 
 #### StageGirl
 
 * ``IsEnabled = true``
+* ``TrackType = "Fixed"``
 * ``GirlShow = "Victory"``
 * ``StageGirl = "MarijaLittleDevil"``
 * ``FlipGirl = false``
@@ -113,12 +114,12 @@ Each character has their own individual options.
 
 ### Left side
 
-* ``TrackType = "Fixed"``
 * ``DebugLog = false``
 
 #### StageGirl
 
 * ``IsEnabled = true``
+* ``TrackType = "Fixed"``
 * ``GirlShow = "Victory"``
 * ``StageGirl = "MarijaLittleDevil"``
 * ``FlipGirl = false``
@@ -128,12 +129,12 @@ Each character has their own individual options.
 
 ### Main show
 
-* ``TrackType = "Fixed"``
 * ``DebugLog = false``
 
 #### PreparationGirl
 
 * ``IsEnabled = true``
+* ``TrackType = "Fixed"``
 * ``GirlShow = "Main"``
 * ``PreparationGirl = "MarijaLittleDevil"``
 * ``FlipGirl = false``
@@ -143,12 +144,12 @@ Each character has their own individual options.
 
 ### Fail show
 
-* ``TrackType = "Fixed"``
 * ``DebugLog = false``
 
 #### PreparationGirl
 
 * ``IsEnabled = true``
+* ``TrackType = "Fixed"``
 * ``GirlShow = "Main"``
 * ``PreparationGirl = "MarijaLittleDevil"``
 * ``FlipGirl = false``
