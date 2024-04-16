@@ -108,6 +108,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
 
         if ((setting & (int)Setting.PositionChange) == 0) return;
+        
+        if (!Girl) return; // Check if girl exists before updating
         SetScale();
         SetPosition();
         Logger.Debug($"Updated {name} girl position/scale.");
