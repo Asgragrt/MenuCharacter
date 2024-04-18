@@ -3,7 +3,6 @@ using Il2CppAssets.Scripts.Database;
 using Il2CppAssets.Scripts.PeroTools.Commons;
 using Il2CppAssets.Scripts.PeroTools.Managers;
 using Il2CppPeroTools2.Resources;
-using MenuCharacter.Enums;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 using Object = UnityEngine.Object;
@@ -21,8 +20,6 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     private bool _parentSet;
 
-    private int _lastIdx = -1;
-
     protected GameObject Girl { get; private set; }
 
     protected virtual void SetParent()
@@ -32,13 +29,18 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     protected virtual void SetPosition()
     {
+        if (!Girl)
+        {
+            Logger.Debug("Tried to set girl position when girl doesn't exist!");
+            return;
+        }
+
         Girl.transform.position = GirlSetting.Position;
     }
 
-    private bool IndexChanged => _lastIdx != GirlSetting.GirlIndex;
-
     internal void Create()
     {
+        Logger.Debug($"Creating {name} girl.");
         if (!GirlSetting.IsEnabled) return;
 
         if (!_parentSet)
@@ -80,12 +82,12 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         Girl.name = name;
         SetScale();
         SetPosition();
-        _lastIdx = GirlSetting.GirlIndex;
     }
 
     internal void Destroy()
     {
         Object.Destroy(Girl);
+        Logger.Debug($"Destroyed {name} girl.");
     }
 
     internal void SetParent(Transform parentTransform)
@@ -98,31 +100,21 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     {
         Logger.Debug($"Updating {name} girl...");
 
-        if (!GirlSetting.IsEnabled)
+        switch (GirlSetting.GetSettingStatusAndReset())
         {
-            Destroy();
-            Logger.Debug($"Destroyed {name} girl.");
-            return;
+            case { IsGirlDisabled: true }:
+                Destroy();
+                return;
+
+            case { GirlNeedsRecreate: true }:
+                Create();
+                return;
+
+            case { GirlPositionChanged: true }:
+                SetScale();
+                SetPosition();
+                return;
         }
-
-        var setting = GirlSetting.GetSettingStatusAndReset();
-        Logger.Debug($"{name} setting value: {setting}");
-
-        if ((setting & (int)Setting.GirlChange) != 0 // If girl changed
-            || GirlSetting.IsEnabled && (setting & (int)Setting.Enabled) != 0 // Or if it went from disabled to enabled
-            || IndexChanged) // Or if it uses selected
-        {
-            Create();
-            Logger.Debug($"Updated {name} girl.");
-            return;
-        }
-
-        if ((setting & (int)Setting.PositionChange) == 0) return;
-
-        if (!Girl) return; // Check if girl exists before updating
-        SetScale();
-        SetPosition();
-        Logger.Debug($"Updated {name} girl position/scale.");
     }
 
     private string GetAssetName()
@@ -139,5 +131,14 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         return assetName;
     }
 
-    private void SetScale() => Girl.transform.localScale = GirlSetting.Scale;
+    private void SetScale()
+    {
+        if (!Girl)
+        {
+            Logger.Debug("Tried to set girl local scale when girl doesn't exist!");
+            return;
+        }
+
+        Girl.transform.localScale = GirlSetting.Scale;
+    }
 }
