@@ -10,6 +10,7 @@ internal static class CharacterChangePatch
     internal static void Postfix()
     {
         if (!SettingsManager.IsAnyGirlEnabled) return;
+        ModManager.SetIndexChanged();
         ModManager.UpdateGirls();
     }
 }

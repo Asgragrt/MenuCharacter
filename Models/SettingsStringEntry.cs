@@ -39,14 +39,14 @@ internal class SettingsStringEntry
 
     internal static void VerifyAll()
     {
-        foreach (var entry in Entries) entry.Verify();
+        foreach (var entry in Entries) entry.SanitizeValue();
     }
 
-    internal string Sanitize(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
+    internal bool SanitizedStringEqual(string s1, string s2) => SanitizeString(s1).InvEquals(SanitizeString(s2));
 
-    internal bool SanitizedEqual(string s1, string s2) => Sanitize(s1).InvEquals(Sanitize(s2));
+    private string SanitizeString(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
 
-    internal void Verify()
+    private void SanitizeValue()
     {
         var currentVal = Value.Trim();
 

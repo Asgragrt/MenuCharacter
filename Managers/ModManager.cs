@@ -23,16 +23,16 @@ internal static class ModManager
 
     internal static SideDefine SideDefine { get; } = new();
 
-    internal static void UpdateGirlsMelon()
-    {
-        // Leaving the girls update to a melon thread with small delay to avoid access violations
-        MelonCoroutines.Start(UpdateGirlsRoutine());
-    }
-
     internal static void Init()
     {
         StageGirl = new StageGirl(SettingsManager.StageGirlSettings);
         PreparationGirl = new PreparationGirl(SettingsManager.PrepGirlSettings);
+    }
+
+    internal static void SetIndexChanged()
+    {
+        SettingsManager.StageGirlSettings.SetIndexChanged();
+        SettingsManager.PrepGirlSettings.SetIndexChanged();
     }
 
     internal static void UpdateGirls()
@@ -44,6 +44,12 @@ internal static class ModManager
         PreparationGirl.Update();
 
         Logger.Debug("Updated girls!");
+    }
+
+    internal static void UpdateGirlsMelon()
+    {
+        // Leaving the girls update to a melon thread with small delay to avoid access violations
+        MelonCoroutines.Start(UpdateGirlsRoutine());
     }
 
     private static IEnumerator UpdateGirlsRoutine()

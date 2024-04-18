@@ -16,7 +16,7 @@ internal enum Setting
 
     Track = 16,
 
-    GirlChange = Girl | GirlShow | Track,
+    Enabled = 32,
 
-    Enabled = 32
+    GirlChange = Girl | GirlShow | Track | Enabled
 }
