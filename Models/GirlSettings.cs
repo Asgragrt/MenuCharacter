@@ -4,6 +4,7 @@ using MenuCharacter.Enums;
 using MenuCharacter.Managers;
 using MenuCharacter.Models.Interfaces;
 using MenuCharacter.Models.Settings;
+using MenuCharacter.Utils;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 
@@ -99,11 +100,11 @@ internal class GirlSetting
 
     internal Vector3 Position => GetPosition();
 
-    internal SettingsStatusChange GetSettingStatusAndReset()
+    internal StatusChange GetSettingStatusAndReset()
     {
         var setting = _settingChanged;
         _settingChanged = (int)Setting.None;
-        return new SettingsStatusChange(this, setting);
+        return new StatusChange(this, setting);
     }
 
     internal void Load()
@@ -150,5 +151,35 @@ internal class GirlSetting
             Show.Fail => FailShow,
             _ => VictoryShow
         };
+    }
+
+    private enum Setting
+    {
+        None = 0,
+
+        Girl = 1,
+
+        GirlShow = 2,
+
+        Flip = 4,
+
+        Side = 8,
+
+        PositionChange = Flip | Side,
+
+        Track = 16,
+
+        Enabled = 32,
+
+        GirlChange = Girl | GirlShow | Track | Enabled
+    }
+
+    internal readonly struct StatusChange(GirlSetting girlSetting, int val)
+    {
+        internal bool IsGirlDisabled => !girlSetting.IsEnabled;
+
+        internal bool GirlNeedsRecreate => (val & (int)Setting.GirlChange).ToBool();
+
+        internal bool GirlPositionChanged => (val & (int)Setting.PositionChange).ToBool();
     }
 }
