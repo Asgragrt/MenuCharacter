@@ -41,9 +41,6 @@ internal static class SettingsManager
 
             Category.LoadFromFile(false);
 
-            StageGirlSettings.Load();
-            PrepGirlSettings.Load();
-
             Logger.Debug("Loaded settings from file.");
         }
         catch (Exception e)

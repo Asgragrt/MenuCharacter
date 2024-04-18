@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using MelonLoader.Preferences;
 using MenuCharacter.Models.Interfaces;
 using MenuCharacter.Utils;
 
@@ -12,14 +13,18 @@ internal class SettingsStringEntry
 
     private readonly string _name;
 
+    private readonly StringValidator _validator;
+
     internal SettingsStringEntry(MelonPreferences_Category category, string name, IDefine define, bool showDesc = true)
     {
         _name = name;
         _define = define;
 
+        _validator = new StringValidator(define);
+
         _entry = showDesc
-            ? category.CreateEntry(name, define.Default, description: Description)
-            : category.CreateEntry(name, define.Default);
+            ? category.CreateEntry(name, define.Default, description: Description, validator: _validator)
+            : category.CreateEntry(name, define.Default, validator: _validator);
     }
 
     internal MelonEvent<string, string> OnEntryValueChanged => _entry.OnEntryValueChanged;
@@ -28,26 +33,26 @@ internal class SettingsStringEntry
 
     private string Description => $"\n{_name} options:\n{_define.Options()}";
 
-    private string Value
+    private string Value => _entry.Value;
+
+    public override string ToString() => _name;
+
+    private class StringValidator(IDefine define) : ValueValidator
     {
-        get => _entry.Value;
-        set => _entry.Value = value;
-    }
+        public override object EnsureValid(object value)
+        {
+            var currentVal = ((string)value).Trim();
 
-    internal bool SanitizedStringEqual(string s1, string s2) => SanitizeString(s1).InvEquals(SanitizeString(s2));
+            value = define.SanitizeString(currentVal);
 
-    internal string SanitizeString(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
+            if (!currentVal.InvEquals((string)value))
+            {
+                Logger.Warning($"\"{currentVal}\" is not a valid value, using default value: \"{define.Default}\"");
+            }
 
-    internal void SanitizeValue()
-    {
-        var currentVal = Value.Trim();
+            return value;
+        }
 
-        Value = SanitizeString(currentVal);
-        Logger.Debug($"\"{_name}\" index to string: {Value} ");
-
-        if (Value.InvEquals(currentVal)) return;
-
-        Logger.Warning(
-            $"\"{currentVal}\" is not a valid value for \"{_name}\", using default value: \"{_define.Default}\"");
+        public override bool IsValid(object value) => true;
     }
 }

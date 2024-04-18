@@ -48,26 +48,22 @@ internal class GirlSetting
 
         _track.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
-            Logger.Debug($"TrackType changed to {newV}");
-            if (!_track.SanitizedStringEqual(oldV, newV)) return;
-
+            Logger.Debug($"{_track} changed from {oldV} to {newV}");
             _settingChanged |= (int)Setting.Track;
         });
 
         _girlShow.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
-            if (_girlShow.SanitizedStringEqual(oldV, newV)) return;
-
+            Logger.Debug($"{_girlShow} changed from {oldV} to {newV}");
             _settingChanged |= (int)Setting.GirlShow;
-
             SetShow();
         });
 
         _girl.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
-            if (_track.Index is (int)Track.Selected) return;
-            if (_girl.SanitizedStringEqual(oldV, newV)) return;
+            Logger.Debug($"{_girl} changed from {oldV} to {newV}");
 
+            if (_track.Index is (int)Track.Selected) return;
             _settingChanged |= (int)Setting.Girl;
         });
 
@@ -75,11 +71,13 @@ internal class GirlSetting
 
         _side.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
-            if (_side.SanitizedStringEqual(oldV, newV)) return;
+            Logger.Debug($"{_side} changed from {oldV} to {newV}");
             _settingChanged |= (int)Setting.Side;
         });
 
         _isEnabled.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Enabled; });
+
+        SetShow();
     }
 
     internal bool IsEnabled => _isEnabled.Value;
@@ -110,16 +108,6 @@ internal class GirlSetting
         var setting = _settingChanged;
         _settingChanged = (int)Setting.None;
         return new StatusChange(this, setting);
-    }
-
-    internal void Load()
-    {
-        _track.SanitizeValue();
-        _girlShow.SanitizeValue();
-        _girl.SanitizeValue();
-        _side.SanitizeValue();
-
-        SetShow();
     }
 
     internal void SetIndexChanged()
