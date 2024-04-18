@@ -26,7 +26,7 @@ internal class SettingsStringEntry
 
     internal MelonEvent<string, string> OnEntryValueChanged => _entry.OnEntryValueChanged;
 
-    internal int Index { get; private set; }
+    internal int Index => _define.StringToIndex(Value);
 
     private string Description => $"\n{_name} options:\n{_define.Options()}";
 
@@ -45,16 +45,13 @@ internal class SettingsStringEntry
 
     internal bool SanitizedStringEqual(string s1, string s2) => SanitizeString(s1).InvEquals(SanitizeString(s2));
 
-    private string SanitizeString(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
+    internal string SanitizeString(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
 
     private void SanitizeValue()
     {
         var currentVal = Value.Trim();
 
-        Index = _define.StringToIndex(currentVal);
-        Logger.Debug($"\"{_name}\" string to index: {Index} ");
-
-        Value = _define.IndexToString(Index);
+        Value = SanitizeString(currentVal);
         Logger.Debug($"\"{_name}\" index to string: {Value} ");
 
         if (Value.InvEquals(currentVal)) return;
