@@ -20,8 +20,6 @@ internal class SettingsStringEntry
         _entry = showDesc
             ? category.CreateEntry(name, define.Default, description: Description)
             : category.CreateEntry(name, define.Default);
-
-        Entries.Add(this);
     }
 
     internal MelonEvent<string, string> OnEntryValueChanged => _entry.OnEntryValueChanged;
@@ -30,17 +28,10 @@ internal class SettingsStringEntry
 
     private string Description => $"\n{_name} options:\n{_define.Options()}";
 
-    private static List<SettingsStringEntry> Entries { get; } = [];
-
     private string Value
     {
         get => _entry.Value;
         set => _entry.Value = value;
-    }
-
-    internal static void VerifyAll()
-    {
-        foreach (var entry in Entries) entry.SanitizeValue();
     }
 
     internal bool SanitizedStringEqual(string s1, string s2) => SanitizeString(s1).InvEquals(SanitizeString(s2));
