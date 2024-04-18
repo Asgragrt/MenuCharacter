@@ -8,5 +8,9 @@ internal interface IDefine
 
     string Options();
 
+    int SanitizeIndex(int i);
+
+    string SanitizeString(string s);
+
     int StringToIndex(string s);
 }
