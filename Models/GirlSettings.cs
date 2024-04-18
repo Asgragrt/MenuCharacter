@@ -2,7 +2,8 @@ using Il2CppAssets.Scripts.Database;
 using MelonLoader;
 using MenuCharacter.Enums;
 using MenuCharacter.Managers;
-using MenuCharacter.Models.DerivedDefines;
+using MenuCharacter.Models.Interfaces;
+using MenuCharacter.Models.Settings;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 
@@ -10,6 +11,12 @@ namespace MenuCharacter.Models;
 
 internal class GirlSetting
 {
+    private static readonly IShowSetting MainShow = new MainShow();
+
+    private static readonly IShowSetting VictoryShow = new VictoryShow();
+
+    private static readonly IShowSetting FailShow = new FailShow();
+
     private readonly MelonPreferences_Entry<bool> _flip;
 
     private readonly SettingsStringEntry _girl;
@@ -21,6 +28,8 @@ internal class GirlSetting
     private readonly SettingsStringEntry _side;
 
     private readonly SettingsStringEntry _track;
+
+    private IShowSetting _currentShow;
 
     private int _settingChanged = (int)Setting.None;
 
@@ -44,7 +53,11 @@ internal class GirlSetting
 
         _girlShow.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
-            if (!_girlShow.SanitizedStringEqual(oldV, newV)) _settingChanged |= (int)Setting.GirlShow;
+            if (_girlShow.SanitizedStringEqual(oldV, newV)) return;
+
+            _settingChanged |= (int)Setting.GirlShow;
+
+            SetShow();
         });
 
         _girl.OnEntryValueChanged.Subscribe((oldV, newV) =>
@@ -80,10 +93,9 @@ internal class GirlSetting
         _ => DataHelper.selectedRoleIndex
     };
 
+    internal string Property => _currentShow.Property;
 
-    internal string Property => ShowDefine.IndexToProperty(ShowIndex);
-
-    internal Vector3 Scale => ShowDefine.IndexToScale(ShowIndex, Flip);
+    internal Vector3 Scale => GetScale();
 
     internal Vector3 Position => GetPosition();
 
@@ -92,6 +104,16 @@ internal class GirlSetting
         var setting = _settingChanged;
         _settingChanged = (int)Setting.None;
         return new SettingsStatusChange(this, setting);
+    }
+
+    internal void Load()
+    {
+        _track.SanitizeValue();
+        _girlShow.SanitizeValue();
+        _girl.SanitizeValue();
+        _side.SanitizeValue();
+
+        SetShow();
     }
 
     internal void SetIndexChanged()
@@ -108,5 +130,25 @@ internal class GirlSetting
         if ((Side)_side.Index is Side.Left) position.x *= -1;
 
         return position;
+    }
+
+    private Vector3 GetScale()
+    {
+        var scale = _currentShow.Scale;
+
+        if (Flip) scale.x *= -1;
+
+        return scale;
+    }
+
+    private void SetShow()
+    {
+        _currentShow = (Show)_girlShow.Index switch
+        {
+            Show.Main => MainShow,
+            Show.Victory => VictoryShow,
+            Show.Fail => FailShow,
+            _ => VictoryShow
+        };
     }
 }

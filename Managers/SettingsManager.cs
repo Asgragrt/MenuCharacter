@@ -38,10 +38,13 @@ internal static class SettingsManager
         try
         {
             Logger.Debug("Loading settings from file.");
-            Category.LoadFromFile(false);
-            Logger.Debug("Loaded settings from file.");
 
-            SettingsStringEntry.VerifyAll();
+            Category.LoadFromFile(false);
+
+            StageGirlSettings.Load();
+            PrepGirlSettings.Load();
+
+            Logger.Debug("Loaded settings from file.");
         }
         catch (Exception e)
         {

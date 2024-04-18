@@ -3,7 +3,6 @@ using Il2CppAssets.Scripts.UI.Panels;
 using MelonLoader;
 using MenuCharacter.Enums;
 using MenuCharacter.Models.BaseClasses;
-using MenuCharacter.Models.DerivedDefines;
 using MenuCharacter.Models.DerivedGirls;
 using MenuCharacter.Utils;
 
@@ -19,7 +18,7 @@ internal static class ModManager
 
     internal static PnlStage PnlStage { get; set; }
 
-    internal static ShowDefine ShowDefine { get; } = new();
+    internal static BaseDefine<Show> ShowDefine { get; } = new(Show.Victory);
 
     internal static BaseDefine<Track> TrackDefine { get; } = new(Track.Fixed);
 

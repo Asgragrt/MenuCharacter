@@ -47,7 +47,7 @@ internal class SettingsStringEntry
 
     internal string SanitizeString(string input) => _define.IndexToString(_define.StringToIndex(input.Trim()));
 
-    private void SanitizeValue()
+    internal void SanitizeValue()
     {
         var currentVal = Value.Trim();
 
