@@ -125,7 +125,7 @@ internal class GirlSetting
 
     private Vector3 GetPosition()
     {
-        var position = PositionManager.GetPosition(ShowIndex, GirlIndex);
+        var position = _currentShow.Position(GirlIndex);
 
         if ((Side)_side.Index is Side.Left) position.x *= -1;
 
