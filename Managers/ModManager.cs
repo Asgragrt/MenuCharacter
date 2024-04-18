@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Il2CppAssets.Scripts.UI.Panels;
 using MelonLoader;
+using MenuCharacter.Enums;
+using MenuCharacter.Models.BaseClasses;
 using MenuCharacter.Models.DerivedDefines;
 using MenuCharacter.Models.DerivedGirls;
 using MenuCharacter.Utils;
@@ -19,11 +21,11 @@ internal static class ModManager
 
     internal static ShowDefine ShowDefine { get; } = new();
 
-    internal static TrackDefine TrackDefine { get; } = new();
+    internal static BaseDefine<Track> TrackDefine { get; } = new(Track.Fixed);
 
-    internal static CharacterDefine CharacterDefine { get; } = new();
+    internal static BaseDefine<Character> CharacterDefine { get; } = new(Character.MarijaLittleDevil);
 
-    internal static SideDefine SideDefine { get; } = new();
+    internal static BaseDefine<Side> SideDefine { get; } = new(Side.Right);
 
     internal static void Init()
     {
