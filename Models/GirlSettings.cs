@@ -49,7 +49,9 @@ internal class GirlSetting
         _track.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
             Logger.Debug($"TrackType changed to {newV}");
-            if (!_track.SanitizedStringEqual(oldV, newV)) _settingChanged |= (int)Setting.Track;
+            if (!_track.SanitizedStringEqual(oldV, newV)) return;
+
+            _settingChanged |= (int)Setting.Track;
         });
 
         _girlShow.OnEntryValueChanged.Subscribe((oldV, newV) =>
@@ -64,14 +66,17 @@ internal class GirlSetting
         _girl.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
             if (_track.Index is (int)Track.Selected) return;
-            if (!_girl.SanitizedStringEqual(oldV, newV)) _settingChanged |= (int)Setting.Girl;
+            if (_girl.SanitizedStringEqual(oldV, newV)) return;
+
+            _settingChanged |= (int)Setting.Girl;
         });
 
         _flip.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Flip; });
 
         _side.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
-            if (!_side.SanitizedStringEqual(oldV, newV)) _settingChanged |= (int)Setting.Side;
+            if (_side.SanitizedStringEqual(oldV, newV)) return;
+            _settingChanged |= (int)Setting.Side;
         });
 
         _isEnabled.OnEntryValueChanged.Subscribe((_, _) => { _settingChanged |= (int)Setting.Enabled; });

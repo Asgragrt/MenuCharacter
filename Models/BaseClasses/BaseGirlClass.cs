@@ -40,8 +40,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
     internal void Create()
     {
-        Logger.Debug($"Creating {name} girl.");
         if (!GirlSetting.IsEnabled) return;
+        Logger.Debug($"Creating {name} girl.");
 
         if (!_parentSet)
         {
@@ -84,12 +84,6 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         SetPosition();
     }
 
-    internal void Destroy()
-    {
-        Object.Destroy(Girl);
-        Logger.Debug($"Destroyed {name} girl.");
-    }
-
     internal void SetParent(Transform parentTransform)
     {
         ParentTransform = parentTransform;
@@ -115,6 +109,12 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
                 SetPosition();
                 return;
         }
+    }
+
+    private void Destroy()
+    {
+        Object.Destroy(Girl);
+        Logger.Debug($"Destroyed {name} girl.");
     }
 
     private string GetAssetName()
