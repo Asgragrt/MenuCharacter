@@ -1,4 +1,4 @@
-namespace MenuCharacter.Models;
+namespace MenuCharacter.Enums;
 
 internal enum Setting
 {
