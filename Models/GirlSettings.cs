@@ -121,7 +121,7 @@ internal class GirlSetting
     {
         var position = _currentShow.Position(GirlIndex);
 
-        if ((Side)_side.Index is Side.Left) position.x *= -1;
+        if ((Side)_side.Index is Side.Left) position.FlipX();
 
         return position;
     }
@@ -130,7 +130,7 @@ internal class GirlSetting
     {
         var scale = _currentShow.Scale;
 
-        if (Flip) scale.x *= -1;
+        if (Flip) scale.FlipX();
 
         return scale;
     }
