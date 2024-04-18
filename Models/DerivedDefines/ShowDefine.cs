@@ -1,7 +1,8 @@
 ﻿using MenuCharacter.Enums;
+using MenuCharacter.Models.BaseClasses;
 using UnityEngine;
 
-namespace MenuCharacter.Models.Defines;
+namespace MenuCharacter.Models.DerivedDefines;
 
 internal class ShowDefine() : BaseDefine<Show>(Show.Victory)
 {

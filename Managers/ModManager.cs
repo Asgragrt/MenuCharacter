@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using Il2CppAssets.Scripts.UI.Panels;
 using MelonLoader;
-using MenuCharacter.Models;
-using MenuCharacter.Models.Defines;
+using MenuCharacter.Models.DerivedDefines;
+using MenuCharacter.Models.DerivedGirls;
 using MenuCharacter.Utils;
 
 namespace MenuCharacter.Managers;
+
+using static SettingsManager;
 
 internal static class ModManager
 {
@@ -25,14 +27,14 @@ internal static class ModManager
 
     internal static void Init()
     {
-        StageGirl = new StageGirl(SettingsManager.StageGirlSettings);
-        PreparationGirl = new PreparationGirl(SettingsManager.PrepGirlSettings);
+        StageGirl = new StageGirl(StageGirlSettings);
+        PreparationGirl = new PreparationGirl(PrepGirlSettings);
     }
 
     internal static void SetIndexChanged()
     {
-        SettingsManager.StageGirlSettings.SetIndexChanged();
-        SettingsManager.PrepGirlSettings.SetIndexChanged();
+        StageGirlSettings.SetIndexChanged();
+        PrepGirlSettings.SetIndexChanged();
     }
 
     internal static void UpdateGirls()

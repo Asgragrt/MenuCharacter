@@ -1,4 +1,4 @@
-﻿namespace MenuCharacter.Models;
+﻿namespace MenuCharacter.Models.Interfaces;
 
 internal interface IDefine
 {

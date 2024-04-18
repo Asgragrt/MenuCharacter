@@ -1,9 +1,9 @@
 using MenuCharacter.Enums;
 using UnityEngine;
 
-namespace MenuCharacter.Models;
+namespace MenuCharacter.Managers;
 
-internal static class Positions
+internal static class PositionManager
 {
     internal static Vector3 GetPosition(int show, int charIdx)
     {

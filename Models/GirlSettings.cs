@@ -2,7 +2,7 @@ using Il2CppAssets.Scripts.Database;
 using MelonLoader;
 using MenuCharacter.Enums;
 using MenuCharacter.Managers;
-using MenuCharacter.Models.Defines;
+using MenuCharacter.Models.DerivedDefines;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 
@@ -103,17 +103,10 @@ internal class GirlSetting
 
     private Vector3 GetPosition()
     {
-        var position = Positions.GetPosition(ShowIndex, GirlIndex);
+        var position = PositionManager.GetPosition(ShowIndex, GirlIndex);
 
-        switch ((Side)_side.Index)
-        {
-            case Side.Right:
-                return position;
-            case Side.Left:
-                position.x *= -1;
-                return position;
-            default:
-                return position;
-        }
+        if ((Side)_side.Index is Side.Left) position.x *= -1;
+
+        return position;
     }
 }

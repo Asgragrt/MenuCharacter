@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using MelonLoader;
+using MenuCharacter.Models.BaseClasses;
 using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 
-namespace MenuCharacter.Models;
+namespace MenuCharacter.Models.DerivedGirls;
 
 internal class StageGirl : BaseGirlClass
 {

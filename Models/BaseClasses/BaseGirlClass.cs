@@ -7,7 +7,7 @@ using UnityEngine;
 using Logger = MenuCharacter.Utils.Logger;
 using Object = UnityEngine.Object;
 
-namespace MenuCharacter.Models;
+namespace MenuCharacter.Models.BaseClasses;
 
 internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 {

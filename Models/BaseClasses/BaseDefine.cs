@@ -1,4 +1,6 @@
-﻿namespace MenuCharacter.Models;
+﻿using MenuCharacter.Models.Interfaces;
+
+namespace MenuCharacter.Models.BaseClasses;
 
 internal abstract class BaseDefine<T>(T defVal) : IDefine where T : struct, Enum, IConvertible
 {

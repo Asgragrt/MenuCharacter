@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using MenuCharacter.Models.Interfaces;
 using MenuCharacter.Utils;
 
 namespace MenuCharacter.Models;

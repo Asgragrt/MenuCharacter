@@ -1,5 +1,6 @@
 ﻿using MenuCharacter.Enums;
+using MenuCharacter.Models.BaseClasses;
 
-namespace MenuCharacter.Models.Defines;
+namespace MenuCharacter.Models.DerivedDefines;
 
 internal class CharacterDefine() : BaseDefine<Character>(Character.MarijaLittleDevil) { }

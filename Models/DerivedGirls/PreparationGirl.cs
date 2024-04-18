@@ -1,7 +1,8 @@
 ﻿using MenuCharacter.Enums;
+using MenuCharacter.Models.BaseClasses;
 using UnityEngine;
 
-namespace MenuCharacter.Models;
+namespace MenuCharacter.Models.DerivedGirls;
 
 internal class PreparationGirl : BaseGirlClass
 {
