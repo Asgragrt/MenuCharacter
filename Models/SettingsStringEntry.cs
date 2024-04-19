@@ -20,7 +20,7 @@ internal class SettingsStringEntry
         _name = name;
         _define = define;
 
-        _validator = new StringValidator(define);
+        _validator = new StringValidator(this, define);
 
         _entry = showDesc
             ? category.CreateEntry(name, define.Default, description: Description, validator: _validator)
@@ -37,17 +37,24 @@ internal class SettingsStringEntry
 
     public override string ToString() => _name;
 
-    private class StringValidator(IDefine define) : ValueValidator
+    private sealed class StringValidator(SettingsStringEntry stringEntry, IDefine define) : ValueValidator
     {
         public override object EnsureValid(object value)
         {
             var currentVal = ((string)value).Trim();
 
+            Logger.Debug($"\'{stringEntry}\' received: \"{currentVal}\"");
+            Logger.Debug($"\'{stringEntry}\': \"{currentVal}\" as index {define.StringToIndex(currentVal)}");
+
             value = define.SanitizeString(currentVal);
+
+            Logger.Debug(
+                $"\'{stringEntry}\': Sanitized value: \"{(string)value}\" as index {define.StringToIndex((string)value)}");
 
             if (!currentVal.InvEquals((string)value))
             {
-                Logger.Warning($"\"{currentVal}\" is not a valid value, using default value: \"{define.Default}\"");
+                Logger.Warning(
+                    $"\"{currentVal}\" is not a valid value for \'{stringEntry}\', using default value: \"{define.Default}\"");
             }
 
             return value;
