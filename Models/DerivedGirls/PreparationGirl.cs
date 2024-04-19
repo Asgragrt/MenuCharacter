@@ -18,6 +18,7 @@ internal class PreparationGirl : BaseGirlClass
     protected override void SetPosition()
     {
         base.SetPosition();
+        if (!Girl || !Girl.active) return;
         if (GirlSetting.ShowIndex == (int)Show.Main) return;
         Girl.transform.position += new Vector3(0, 0.2f, 0);
     }
