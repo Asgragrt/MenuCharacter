@@ -13,18 +13,16 @@ internal class SettingsStringEntry
 
     private readonly string _name;
 
-    private readonly StringValidator _validator;
-
     internal SettingsStringEntry(MelonPreferences_Category category, string name, IDefine define, bool showDesc = true)
     {
         _name = name;
         _define = define;
 
-        _validator = new StringValidator(this, define);
+        var validator = new StringValidator(this, define);
 
         _entry = showDesc
-            ? category.CreateEntry(name, define.Default, description: Description, validator: _validator)
-            : category.CreateEntry(name, define.Default, validator: _validator);
+            ? category.CreateEntry(name, define.Default, description: Description, validator: validator)
+            : category.CreateEntry(name, define.Default, validator: validator);
     }
 
     internal MelonEvent<string, string> OnEntryValueChanged => _entry.OnEntryValueChanged;
