@@ -20,15 +20,15 @@ internal class GirlSetting
 
     private readonly MelonPreferences_Entry<bool> _flip;
 
-    private readonly SettingsStringEntry _girl;
+    private readonly SettingsStringEntry<Character> _girl;
 
-    private readonly SettingsStringEntry _girlShow;
+    private readonly SettingsStringEntry<Show> _girlShow;
 
     private readonly MelonPreferences_Entry<bool> _isEnabled;
 
-    private readonly SettingsStringEntry _side;
+    private readonly SettingsStringEntry<Side> _side;
 
-    private readonly SettingsStringEntry _track;
+    private readonly SettingsStringEntry<Track> _track;
 
     private IShowSetting _currentShow;
 
@@ -40,11 +40,11 @@ internal class GirlSetting
         category.SetFilePath(SettingsManager.SettingsPath, false, false);
 
         _isEnabled = category.CreateEntry("IsEnabled", true);
-        _track = new SettingsStringEntry(category, "TrackType", ModManager.TrackDefine, descEnable);
-        _girlShow = new SettingsStringEntry(category, "GirlShow", ModManager.ShowDefine, descEnable);
-        _girl = new SettingsStringEntry(category, name, ModManager.CharacterDefine, descEnable);
+        _track = new SettingsStringEntry<Track>(category, "TrackType", Track.Fixed, descEnable);
+        _girlShow = new SettingsStringEntry<Show>(category, "GirlShow", Show.Victory, descEnable);
+        _girl = new SettingsStringEntry<Character>(category, name, Character.MarijaLittleDevil, descEnable);
         _flip = category.CreateEntry("FlipGirl", true);
-        _side = new SettingsStringEntry(category, "ScreenSide", ModManager.SideDefine, descEnable);
+        _side = new SettingsStringEntry<Side>(category, "ScreenSide", Side.Right, descEnable);
 
         _track.OnEntryValueChanged.Subscribe((oldV, newV) =>
         {
