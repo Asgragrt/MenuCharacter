@@ -90,7 +90,7 @@ internal class GirlSetting
 
     internal bool Flip => _flip.Value;
 
-    internal int GirlIndex => (Track)TrackIndex switch
+    internal int GirlIndex => _track.EnumVal switch
     {
         Track.Selected => DataHelper.selectedRoleIndex,
         Track.Fixed => FixedGirlIndex,
@@ -113,7 +113,7 @@ internal class GirlSetting
     internal void SetIndexChanged()
     {
         // Set index changed only if it is selected
-        if (TrackIndex is not (int)Track.Selected) return;
+        if (_track.EnumVal is not Track.Selected) return;
         _settingChanged |= (int)Setting.Girl;
     }
 
@@ -121,7 +121,7 @@ internal class GirlSetting
     {
         var position = _currentShow.Position(GirlIndex);
 
-        if ((Side)_side.Index is Side.Left) position.FlipX();
+        if (_side.EnumVal is Side.Left) position.FlipX();
 
         return position;
     }
@@ -137,7 +137,7 @@ internal class GirlSetting
 
     private void SetShow()
     {
-        _currentShow = (Show)_girlShow.Index switch
+        _currentShow = _girlShow.EnumVal switch
         {
             Show.Main => MainShow,
             Show.Victory => VictoryShow,

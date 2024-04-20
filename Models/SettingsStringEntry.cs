@@ -28,6 +28,8 @@ internal class SettingsStringEntry<T> where T : struct, Enum, IConvertible
 
     internal int Index => _define.StringToIndex(Value);
 
+    internal T EnumVal => _define.StringToType(Value);
+
     private string Description => $"\n{_name} options:\n{_define.Options()}";
 
     private string Value => _entry.Value;
@@ -63,6 +65,8 @@ internal class SettingsStringEntry<T> where T : struct, Enum, IConvertible
         public int SanitizeIndex(int i) => StringToIndex(IndexToString(i));
 
         public string SanitizeString(string s) => IndexToString(StringToIndex(s));
+
+        public TEnum StringToType(string s) => Enum.TryParse(s, true, out TEnum result) ? result : defVal;
     }
 
     private sealed class StringValidator(string stringEntry, IDefine define) : ValueValidator
