@@ -9,6 +9,11 @@ internal static class WatcherManager
 {
     private static readonly FileSystemWatcher Watcher = new(UserDataDirectory);
 
+    internal static void DisableWatcherEvents()
+    {
+        Watcher.EnableRaisingEvents = false;
+    }
+
     internal static void Init()
     {
         Logger.Debug("Initializing watcher settings.");
