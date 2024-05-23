@@ -2,7 +2,7 @@
 
 Display your favorite character on stage!
 
-## ❗Check out my other [mods](https://github.com/Asgragrt#musedash-modding)❗
+## ❗Check out my other [mods](https://github.com/Asgragrt/AsgraMDMods/blob/main/README.md)❗
 
 ## Features
 
