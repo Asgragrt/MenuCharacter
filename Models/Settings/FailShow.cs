@@ -1,3 +1,4 @@
+/* cSpell:disable */
 using MenuCharacter.Enums;
 using MenuCharacter.Models.Interfaces;
 using UnityEngine;
@@ -74,6 +75,9 @@ internal class FailShow : IShowSetting
 
             case Character.KagamineRinLen:
                 return new Vector3(6.7f, -4.6f, 100f);
+
+            case Character.RinRacer:
+                return new Vector3(1.3f, -7.4f, 100f);
 
             default:
                 return new Vector3(6.7f, -4f, 100f);

@@ -27,12 +27,12 @@ Each character has their own individual options.
 
 * `IsEnabled` whether to enable/disable the character.
 * `TrackType` display your current character or one chosen below.
-    * `Selected` uses your current selected character.
-    * `Fixed` uses the characters on `StageGirl` and `PreparationGirl`.
+  * `Selected` uses your current selected character.
+  * `Fixed` uses the characters on `StageGirl` and `PreparationGirl`.
 * `GirlShow` selects the sprite.
-    * `Main` uses the main sprite.
-    * `Victory` uses the victory sprite.
-    * `Fail` uses the fail sprite.
+  * `Main` uses the main sprite.
+  * `Victory` uses the victory sprite.
+  * `Fail` uses the fail sprite.
 * `StageGirl` and `PreparationGirl` selects the character to display if `TrackType` is `Fixed`
   \(See [character list](#character-list) for an exhaustive listing of accepted values\).
 * `FlipGirl` whether to flip the sprite or not.
@@ -67,6 +67,10 @@ Each character has their own individual options.
 * `BuroExorcistMaster`
 * `HatsuneMiku`
 * `KagamineRinLen`
+* `RinRacer`
+
+> [!WARNING]  
+> RinRacer Fail Show sprite is way too big. For decent results use `ScreenSide: Left | FlipGirl: False` or `ScreenSide: Right | FlipGirl: True`  
 
 ## Installation
 

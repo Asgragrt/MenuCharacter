@@ -1,4 +1,5 @@
-﻿namespace MenuCharacter.Enums;
+﻿/* cSpell:disable */
+namespace MenuCharacter.Enums;
 
 internal enum Character
 {
@@ -54,5 +55,7 @@ internal enum Character
 
     HatsuneMiku = 25,
 
-    KagamineRinLen = 26
+    KagamineRinLen = 26,
+
+    RinRacer = 27,
 }
