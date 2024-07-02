@@ -40,6 +40,9 @@ Each character has their own individual options.
 
 ## Character list
 
+> [!WARNING]  
+> RinRacer Fail Show sprite is way too big. For decent results use `ScreenSide: Left | FlipGirl: False` or `ScreenSide: Right | FlipGirl: True`  
+
 * `RinBassist`
 * `RinBadGirl`
 * `RinSleepwalkerGirl`
@@ -68,9 +71,6 @@ Each character has their own individual options.
 * `HatsuneMiku`
 * `KagamineRinLen`
 * `RinRacer`
-
-> [!WARNING]  
-> RinRacer Fail Show sprite is way too big. For decent results use `ScreenSide: Left | FlipGirl: False` or `ScreenSide: Right | FlipGirl: True`  
 
 ## Installation
 
