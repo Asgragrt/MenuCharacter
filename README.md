@@ -41,7 +41,9 @@ Each character has their own individual options.
 ## Character list
 
 > [!WARNING]  
-> RinRacer Fail Show sprite is way too big. For decent results use `ScreenSide: Left | FlipGirl: False` or `ScreenSide: Right | FlipGirl: True`  
+> RinRacer Fail Show sprite is way too big. For decent results use `ScreenSide: Left | FlipGirl: False` or `ScreenSide: Right | FlipGirl: True`.
+>
+> MarijaDancer Victory Show hand :/ (too lazy to just change its sorting order lol)
 
 * `RinBassist`
 * `RinBadGirl`
@@ -71,6 +73,7 @@ Each character has their own individual options.
 * `HatsuneMiku`
 * `KagamineRinLen`
 * `RinRacer`
+* `MarijaDancer`
 
 ## Installation
 
