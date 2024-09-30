@@ -11,36 +11,20 @@ namespace MenuCharacter.Models.BaseClasses;
 
 internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 {
-    private static readonly DBConfigCharacter DBConfigCharacter = Singleton<ConfigManager>.instance
-        .GetConfigObject<DBConfigCharacter>();
-
     protected readonly GirlSetting GirlSetting = girlSetting;
 
     protected Transform ParentTransform;
+    private static readonly DBConfigCharacter DBConfigCharacter =
+        Singleton<ConfigManager>.instance.GetConfigObject<DBConfigCharacter>();
 
     private bool _parentSet;
 
     protected GameObject Girl { get; private set; }
 
-    protected virtual void SetParent()
-    {
-        Girl.transform.SetParent(ParentTransform);
-    }
-
-    protected virtual void SetPosition()
-    {
-        if (!Girl)
-        {
-            Logger.Debug("Tried to set girl position when girl doesn't exist!");
-            return;
-        }
-
-        Girl.transform.position = GirlSetting.Position;
-    }
-
     internal void Create()
     {
-        if (!GirlSetting.IsEnabled) return;
+        if (!GirlSetting.IsEnabled)
+            return;
         Logger.Debug($"Creating {name} girl.");
 
         if (!_parentSet)
@@ -52,7 +36,6 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         Logger.Debug($"{name}: Destroying girl!");
         Destroy();
 
-
         if (!ParentTransform)
         {
             Logger.Debug($"{name}: Parent doesn't exist!");
@@ -63,8 +46,8 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
 
         try
         {
-            Girl = ResourcesManager.instance
-                .LoadFromName<GameObject>(GetAssetName())
+            Girl = ResourcesManager
+                .instance.LoadFromName<GameObject>(GetAssetName())
                 .FastInstantiate();
         }
         catch (Exception e)
@@ -73,13 +56,10 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
             return;
         }
 
-        Logger.Debug($"{name}: Setting girl parent!");
-        SetParent();
-
-        if (Girl.TryGetComponent(out MeshRenderer mr)) mr.sortingOrder = 100;
-
-        Logger.Debug($"{name}: Scaling girl!");
         Girl.name = name;
+        SetParent();
+        SetSortingOrder();
+        SetLayer();
         SetScale();
         SetPosition();
     }
@@ -111,6 +91,24 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
     }
 
+    protected virtual void SetParent()
+    {
+        Logger.Debug($"{name}: Setting girl parent!");
+        Girl.transform.SetParent(ParentTransform);
+    }
+
+    protected virtual void SetPosition()
+    {
+        Logger.Debug($"{name}: Setting girl position!");
+        if (!Girl)
+        {
+            Logger.Debug("Tried to set girl position when girl doesn't exist!");
+            return;
+        }
+
+        Girl.transform.position = GirlSetting.Position;
+    }
+
     private void Destroy()
     {
         Object.Destroy(Girl);
@@ -120,9 +118,11 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
     private string GetAssetName()
     {
         Logger.Debug($"{name}: Getting character info.");
+
         var charInfo = DBConfigCharacter.GetCharacterInfoByIndex(GirlSetting.GirlIndex);
 
-        var assetName = typeof(CharacterInfo).GetProperty(GirlSetting.Property)
+        var assetName = typeof(CharacterInfo)
+            .GetProperty(GirlSetting.Property)
             ?.GetValue(charInfo, null)
             ?.ToString();
 
@@ -131,8 +131,26 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         return assetName;
     }
 
+    private void SetLayer()
+    {
+        Logger.Debug($"{name}: Setting girl layer!");
+        if (!Girl)
+        {
+            return;
+        }
+
+        var layer = LayerMask.NameToLayer("UI");
+        Girl.layer = layer;
+        var parent = Girl.transform;
+        for (var childIndex = 0; childIndex < parent.childCount; childIndex++)
+        {
+            parent.GetChild(childIndex).gameObject.layer = layer;
+        }
+    }
+
     private void SetScale()
     {
+        Logger.Debug($"{name}: Setting girl scale!");
         if (!Girl)
         {
             Logger.Debug("Tried to set girl local scale when girl doesn't exist!");
@@ -140,5 +158,17 @@ internal abstract class BaseGirlClass(string name, GirlSetting girlSetting)
         }
 
         Girl.transform.localScale = GirlSetting.Scale;
+    }
+
+    private void SetSortingOrder()
+    {
+        Logger.Debug($"{name}: Setting girl sorting order!");
+        var renderers = Girl.GetComponentsInChildren<MeshRenderer>();
+        if (renderers is null || renderers.Length == 0)
+            return;
+        foreach (var renderer in Girl.GetComponentsInChildren<MeshRenderer>())
+        {
+            renderer.sortingOrder = 100;
+        }
     }
 }
