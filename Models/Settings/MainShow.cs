@@ -11,8 +11,8 @@ internal class MainShow : IShowSetting
 
     Vector3 IShowSetting.Scale { get; } = new(50f, 50f, 100f);
 
-    Vector3 IShowSetting.Position(int character) =>
-        (Character)character switch
+    static Vector3 Position(Character character) =>
+        character switch
         {
             Character.RinBassist => new Vector3(6.7f, -5.4f, 100f),
             Character.RinBadGirl => new Vector3(6.7f, -5.4f, 100f),
@@ -42,6 +42,9 @@ internal class MainShow : IShowSetting
             Character.HatsuneMiku => new Vector3(6.7f, -4f, 100f),
             Character.KagamineRinLen => new Vector3(6.7f, -3.5f, 100f),
             Character.RinRacer => new Vector3(6.5f, -4.5f, 100f),
+            Character.MarijaDancer => new Vector3(6.7f, -5f, 100f),
             _ => new Vector3(6.7f, -5f, 100f)
         };
+
+    Vector3 IShowSetting.Position(int character) => Position((Character)character);
 }

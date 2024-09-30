@@ -58,4 +58,6 @@ internal enum Character
     KagamineRinLen = 26,
 
     RinRacer = 27,
+
+    MarijaDancer = 28,
 }

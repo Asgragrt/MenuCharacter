@@ -11,9 +11,9 @@ internal class FailShow : IShowSetting
 
     Vector3 IShowSetting.Scale { get; } = new(0.75f, 0.75f, 100f);
 
-    Vector3 IShowSetting.Position(int character)
+    static Vector3 Position(Character character)
     {
-        switch ((Character)character)
+        switch (character)
         {
             case Character.RinBassist:
             case Character.RinBadGirl:
@@ -79,8 +79,13 @@ internal class FailShow : IShowSetting
             case Character.RinRacer:
                 return new Vector3(1.3f, -7.4f, 100f);
 
+            case Character.MarijaDancer:
+                return new Vector3(6.9f, -4.6f, 100f);
+
             default:
                 return new Vector3(6.7f, -4f, 100f);
         }
     }
+
+    Vector3 IShowSetting.Position(int character) => Position((Character)character);
 }
